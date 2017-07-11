@@ -32,13 +32,17 @@
         	 *
         	 * @hooked colombo_get_logo - 10
         	 */
-          do_action('colombo_get_logo'); 
+          do_action('colombo_get_logo');
           ?>
 				</a>
 			</div>
 			<div class="navigation">
 				<span class="mobile-menu"><i class="fa fa-bars"></i></span>
-				<ul class="main-menu">
+        <?
+        $walker = new Colombo_Nav_Walker();
+        wp_nav_menu( array( 'walker' => $walker, 'theme_location' => 'main-menu', 'container' => '',  'menu_id' => '', 'menu_class' => 'main-menu'));
+        ?>
+				<!-- <ul class="main-menu">
 					<li class="menu-item has-children">
 						<a href="#" class="menu-link">Продукция</a>
 						<ul class="sub-menu">
@@ -101,7 +105,7 @@
 							</li>
 						</ul>
 					</li>
-				</ul>
+				</ul> -->
 			</div>
 			<div class="langs">
 				<ul class="langs-list">

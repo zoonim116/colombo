@@ -255,7 +255,7 @@ header .navigation .main-menu {
 
 header .navigation .main-menu .menu-item {
   position: relative;
-  display: inline-block;
+  _display: inline-block;
 }
 
 header .navigation .main-menu .menu-item .menu-link {
@@ -300,10 +300,10 @@ header .navigation .main-menu .menu-item .sub-menu {
   transition: .4s;
 }
 
-header .navigation .main-menu .menu-item:last-child .sub-menu {
+/*header .navigation .main-menu .menu-item:last-child .sub-menu {
   left: auto;
   right: 0;
-}
+}*/
 
 header .navigation .main-menu .menu-item .sub-menu.active {
   top: 30px;
@@ -345,7 +345,7 @@ header .navigation .main-menu .menu-item .sub-menu li a:hover {
   transition: .4s;
 }
 
-header .navigation .main-menu .menu-item.has-children:after {
+header .navigation .main-menu .menu-item.menu-item-has-children:after {
   content: "\f107";
   font: 14px/1 FontAwesome;
   font-size: inherit;
@@ -588,7 +588,7 @@ header .search form button .fa {
 .news-novelties article {
   background: #fff;
   position: relative;
-  
+
 }
 
 body:not(.home) .news-novelties article {
@@ -2848,7 +2848,7 @@ footer .footer-bottom p {
     position: relative;
   }
 
-  header .navigation .main-menu .menu-item.has-children::after {
+  header .navigation .main-menu .menu-item.menu-item-has-children::after {
     display: none;
   }
 
@@ -2985,7 +2985,7 @@ footer .footer-bottom p {
   main {
     min-height: 75vh;
   }
-  
+
   .colums .colum-1-2 {
     -webkit-box-flex: 0;
     -webkit-flex: 0 0 100%;
