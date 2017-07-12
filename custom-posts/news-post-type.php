@@ -14,7 +14,7 @@ function create_posttype() {
 			'rewrite' => array('slug' => 'news'),
       'query_var' => true,
       'supports' => array( 'title', 'editor', 'thumbnail'),
-      'menu_icon'           => 'dashicons-list-view',
+      'menu_icon' => 'dashicons-list-view',
 		)
 	);
 }

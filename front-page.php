@@ -12,7 +12,6 @@
 					<h1><?= __( 'Современная сантехника для ванных комнат' ) ?></h1>
 					<div class="last-post colums">
             <? do_action('colombo_get_last_news_on_homepage', 3); ?>
-						
 					</div>
 				</div>
 			</div>

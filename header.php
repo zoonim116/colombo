@@ -42,70 +42,6 @@
         $walker = new Colombo_Nav_Walker();
         wp_nav_menu( array( 'walker' => $walker, 'theme_location' => 'main-menu', 'container' => '',  'menu_id' => '', 'menu_class' => 'main-menu'));
         ?>
-				<!-- <ul class="main-menu">
-					<li class="menu-item has-children">
-						<a href="#" class="menu-link">Продукция</a>
-						<ul class="sub-menu">
-							<li>
-								<a href="#">Керамика / Ceramics</a>
-							</li>
-							<li>
-								<a href="#">Умывальник / WB</a>
-							</li>
-							<li>
-								<a href="#">Унитаз / WC</a>
-							</li>
-							<li>
-								<a href="#">Компакт / WC Compact</a>
-							</li>
-							<li>
-								<a href="#">Подвесной унитаз / WHWC</a>
-							</li>
-							<li>
-								<a href="#">Пьедестал / Pedestal</a>
-							</li>
-							<li>
-								<a href="#">Биде / Bidet</a>
-							</li>
-							<li>
-								<a href="#">Писсуар / Urinal</a>
-							</li>
-							<li>
-								<a href="#">Ванны / Bath</a>
-							</li>
-							<li>
-								<a href="#">Мебель / Furniture</a>
-							</li>
-						</ul>
-					</li>
-					<li class="menu-item"><a href="#" class="menu-link">Серии</a></li>
-					<li class="menu-item"><a href="#" class="menu-link">Интерьеры</a></li>
-					<li class="menu-item"><a href="#" class="menu-link">Где купить</a></li>
-					<li class="menu-item"><a href="#" class="menu-link">Новости</a></li>
-					<li class="menu-item"><a href="#" class="menu-link">О компании</a></li>
-					<li class="menu-item"><a href="#" class="menu-link">Контакты</a></li>
-					<li class="menu-item"><a href="#" class="menu-link">Видео</a></li>
-					<li class="menu-item has-children">
-						<a href="#" class="menu-link">Файлы для скачивания</a>
-						<ul class="sub-menu">
-							<li>
-								<a href="http://colombo.ua/uploads/downloads/COLOMBO_catalogue_2017_UA.pdf" target="_blank">
-									<img src="images/pdf.png">Каталог продукции Colombo RU
-								</a>
-							</li>
-							<li>
-								<a href="http://colombo.ua/uploads/downloads/Pricelist_01_04_2017.pdf" target="_blank">
-									<img src="images/pdf.png">Прайс-лист Colombo
-								</a>
-							</li>
-							<li>
-								<a href="http://colombo.ua/uploads/downloads/Status_colombo_brochure_2016.pdf" target="_blank">
-									<img src="images/pdf.png">Буклет серии СТАТУС
-								</a>
-							</li>
-						</ul>
-					</li>
-				</ul> -->
 			</div>
 			<div class="langs">
 				<ul class="langs-list">
@@ -122,4 +58,8 @@
 			</div>
 		</div>
 	</header>
+  <?  if(!is_home()): ?>
+    <?= ThemeUtils::breadcrumbs(); ?>
+
+  <? endif; ?>
 	<main>

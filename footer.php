@@ -3,39 +3,19 @@
 		<div class="content">
 			<div class="footer-widgets colums">
 				<div class="footer-widget">
-					<h5 class="widget-title">Категории</h5>
+					<h5 class="widget-title"><?= __('Категории'); ?></h5>
 					<div class="widget-menu">
-						<ul class="menu">
-							<li><a href="#">Керамика / Ceramics</a></li>
-							<li><a href="#">Умывальник / WB</a></li>
-							<li><a href="#">Унитаз / WC</a></li>
-							<li><a href="#">Компакт / WC Compact</a></li>
-							<li><a href="#">Подвесной унитаз / WHWC</a></li>
-							<li><a href="#">Пьедестал / Pedestal</a></li>
-							<li><a href="#">Биде / Bidet</a></li>
-							<li><a href="#">Писсуар / Urinal</a></li>
-							<li><a href="#">Ванны / Bath</a></li>
-							<li><a href="#">Мебель / Furniture</a></li>
-						</ul>
+            <? wp_nav_menu( array( 'theme_location' => 'categories-menu', 'container' => '',  'menu_id' => '', 'menu_class' => 'menu')); ?>
 					</div>
 				</div>
 				<div class="footer-widget">
-					<h5 class="widget-title">Серии</h5>
+					<h5 class="widget-title"><?= __('Серии'); ?></h5>
 					<div class="widget-menu">
-						<ul class="menu">
-							<li><a href="#">Полесье / Polesye</a></li>
-							<li><a href="#">Вектор / Vector</a></li>
-							<li><a href="#">Акцент / Accent</a></li>
-							<li><a href="#">Лотос / Lotus</a></li>
-							<li><a href="#">Бэмби / Bembi</a></li>
-							<li><a href="#">Другое / Others</a></li>
-							<li><a href="#">Фортуна / Fortuna</a></li>
-							<li><a href="#">Статус / Status</a></li>
-						</ul>
+            <? wp_nav_menu( array( 'theme_location' => 'series-menu', 'container' => '',  'menu_id' => '', 'menu_class' => 'menu')); ?>
 					</div>
 				</div>
 				<div class="footer-widget">
-					<h5 class="widget-title">Разделы сайта</h5>
+					<h5 class="widget-title"><?= __('Разделы сайта'); ?></h5>
 					<div class="widget-menu">
 						<ul class="menu">
 							<li><a href="#">Продукция</a></li>

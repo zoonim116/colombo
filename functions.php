@@ -9,7 +9,10 @@ require_once get_template_directory() . '/helpers/cpt.php';
 function register_menus() {
   register_nav_menus(
     array(
-      'main-menu' => __( 'Header menu' ),
+      'main-menu' => __( 'Главное меню' ),
+      'series-menu' => __( 'Меню серий' ),
+      'categories-menu' => __( 'Меню категорий' ),
+      'pages-menu' => __( 'Меню разделов сайта' )
     )
   );
 }
@@ -93,3 +96,19 @@ function colombo_get_last_news_on_homepage($cntNews) {
 }
 
 add_action( 'colombo_get_last_news_on_homepage', 'colombo_get_last_news_on_homepage', 10, 1 );
+
+/**
+ * Insert the h1 tag title on series page.
+ */
+
+function colombo_get_series_title() {
+  echo "<h1 class=\"page-title\">".__('Серии сантехники и керамики для ванных комнат от Colombo') ."</h1>";
+}
+
+add_action('colombo_get_series_title', 'colombo_get_series_title', 10);
+
+function colombo_show_series() {
+
+}
+
+add_action('colombo_show_series', 'colombo_show_series', 10);
