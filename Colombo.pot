@@ -25,3 +25,37 @@ msgstr ""
 #. Author of the theme
 msgid "Maxim Nepomniashiy"
 msgstr ""
+
+
+msgid "Современная сантехника для ванных комнат"
+msgstr ""
+
+msgid "Новости"
+msgstr ""
+
+msgid "Новость"
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""

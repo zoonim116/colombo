@@ -3,6 +3,7 @@ require_once get_template_directory() . '/helpers/class-tgm-plugin-activation.ph
 require_once get_template_directory() . '/helpers/required_plugins.php';
 require_once get_template_directory() . '/helpers/colombo_nav_walker.php';
 require_once get_template_directory() . '/helpers/theme_utils.php';
+require_once get_template_directory() . '/helpers/cpt.php';
 
 /************************************************** Register menus **************************************************************************/
 function register_menus() {
@@ -59,3 +60,36 @@ function colombo_get_logo() {
 }
 
 add_action( 'colombo_get_logo', 'colombo_get_logo', 10 );
+
+/**
+* Insert last 3 news to homepage
+* @param  int $cntNews count of news to display
+*/
+
+function colombo_get_last_news_on_homepage($cntNews) {
+  $the_query = new WP_Query(array(
+      'post_type' => 'news',
+      'posts_per_page' => $cntNews
+    ));
+
+    if ($the_query->have_posts()) {
+      while ($the_query->have_posts()) {
+        $the_query->the_post(); ?>
+        <article class="colum-1-3">
+          <div class="post-content">
+            <p class="post-date"> <?= get_the_date('d.m.Y'); ?></p>
+            <h3 class="post-title">
+              <a href="<? the_permalink(); ?>"><? the_title(); ?></a>
+            </h3>
+          </div>
+          <div class="post-image">
+            <a href="<? the_permalink(); ?>">
+              <? the_post_thumbnail(); ?>
+            </a>
+          </div>
+        </article>
+    <?  }
+    }
+}
+
+add_action( 'colombo_get_last_news_on_homepage', 'colombo_get_last_news_on_homepage', 10, 1 );
