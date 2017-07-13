@@ -5,7 +5,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-11 11:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: Maxim Nepomniashiy <maximko91@gmail.com>\n"
 "Language-Team: \n"
 "Language: \n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
@@ -22,11 +22,6 @@ msgstr ""
 msgid "WP Theme + Woocommerce Theme for colombo.ua"
 msgstr ""
 
-#. Author of the theme
-msgid "Maxim Nepomniashiy"
-msgstr ""
-
-
 msgid "Современная сантехника для ванных комнат"
 msgstr ""
 
@@ -36,16 +31,16 @@ msgstr ""
 msgid "Новость"
 msgstr ""
 
-msgid ""
+msgid "Серии сантехники и керамики для ванных комнат от Colombo"
 msgstr ""
 
-msgid ""
+msgid "Серии"
 msgstr ""
 
-msgid ""
+msgid "Категории"
 msgstr ""
 
-msgid ""
+msgid "Разделы сайта"
 msgstr ""
 
 msgid ""

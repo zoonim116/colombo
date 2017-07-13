@@ -27,10 +27,10 @@ $(function() {
 $(document).ready(function() {
 
 	// show / hide sub-menu
-	$('header .navigation .main-menu .menu-item').click(function() {
-		$(this).children('.sub-menu').toggleClass('active');
-		return false;
-	});
+	// $('header .navigation .main-menu .menu-item').click(function() {
+	// 	$(this).children('.sub-menu').toggleClass('active');
+	// 	return false;
+	// });
 
 	$('header .navigation .main-menu .menu-item').mouseenter(function() {
 		$(this).children('.sub-menu').addClass('active');
@@ -39,7 +39,7 @@ $(document).ready(function() {
 	$('header .navigation .main-menu .menu-item').mouseleave(function() {
 		$(this).children('.sub-menu').removeClass('active');
 	});
-	
+
 	// filters
 	$('.filters .filters-title a').click(function() {
 		if ($(this).parents('.filters').hasClass('categories')) {
@@ -198,7 +198,7 @@ $(document).ready(function() {
     	}
     });
 
-    // interiors-foto 
+    // interiors-foto
     $('.interiors-foto li a').click(function() {
     	var interiorTitle = $(this).attr('title');
     	var interiorImg = $(this).children('img').attr('src');

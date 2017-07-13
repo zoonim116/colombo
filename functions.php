@@ -101,14 +101,32 @@ add_action( 'colombo_get_last_news_on_homepage', 'colombo_get_last_news_on_homep
  * Insert the h1 tag title on series page.
  */
 
-function colombo_get_series_title() {
-  echo "<h1 class=\"page-title\">".__('Серии сантехники и керамики для ванных комнат от Colombo') ."</h1>";
+function colombo_get_page_title() {
+  $title = get_field('page_header');
+  if(!$title) {
+    $title = get_the_title();
+  }
+  echo "<h1 class=\"page-title\">". $title ."</h1>";
 }
 
-add_action('colombo_get_series_title', 'colombo_get_series_title', 10);
+add_action('colombo_get_page_title', 'colombo_get_page_title', 10);
 
 function colombo_show_series() {
-
+  $terms = get_terms( array(
+    'taxonomy' => 'pa_seriya',
+    'hide_empty' => false,
+  ));
+  foreach ($terms as $term) {
+      $img = get_wp_term_image($term->term_id); ?>
+      <div class="colum-1-4">
+				<div class="series">
+					<a href="#">
+						<img src="<?= $img;?>" alt="<?= $term->name; ?>" title="<?= $term->name; ?>">
+						<span class="series-name"><?= $term->name; ?></span>
+					</a>
+				</div>
+			</div>
+  <? }
 }
 
 add_action('colombo_show_series', 'colombo_show_series', 10);
