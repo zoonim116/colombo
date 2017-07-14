@@ -7,6 +7,7 @@
 }
 
 body {
+  position: relative;
   font: 400 15px/1.4em "Ubuntu",sans-serif;
   background: #fff;
   color: #241717;
@@ -230,6 +231,11 @@ header .logo img {
   display: block;
 }
 
+header .logo svg {
+  width: 152px;
+  height: 56px;
+}
+
 header .navigation .mobile-menu,
 header .content .search .show-search {
   display: none;
@@ -300,10 +306,10 @@ header .navigation .main-menu .menu-item .sub-menu {
   transition: .4s;
 }
 
-/*header .navigation .main-menu .menu-item:last-child .sub-menu {
+header .navigation .main-menu .menu-item:last-child .sub-menu {
   left: auto;
   right: 0;
-}*/
+}
 
 header .navigation .main-menu .menu-item .sub-menu.active {
   top: 30px;
@@ -765,7 +771,7 @@ body:not(.home) .news-novelties article .post-content .read-more {
 
 .all-about .about a img.rectangular {
   max-width: 580px;
-  max-height: 580px;
+  max-height: 260px;
 }
 
 .news-novelties article:first-child .post-content {
@@ -983,6 +989,7 @@ body:not(.home) .news-novelties article .post-content .read-more {
 .all-filters {
   margin-bottom: 30px;
   padding: 15px;
+  background: #fff;
   border: 1px solid #ededed;
 }
 
@@ -1093,6 +1100,10 @@ body:not(.home) .news-novelties article .post-content .read-more {
 .all-products .product:nth-last-child(3),
 .all-products .product:nth-child(4n) {
   margin-right: 0;
+}
+
+.else-products .all-products .product:nth-last-child(3) {
+  margin-right: 2.5%;
 }
 
 /* .all-products .product:nth-last-child(3):after,
@@ -2105,6 +2116,17 @@ body:not(.home) .news-novelties article .post-content .read-more {
 footer {
   background: #561c44;
   margin-top: 30px;
+
+}
+
+footer .hide-block {
+  position: absolute;
+  bottom: 53px;
+  left: 0;
+  width: 100%;
+  background: #561c44;
+  z-index: 1000;
+  display: none;
 }
 
 footer .footer-widgets {
@@ -2147,7 +2169,7 @@ footer .footer-widgets .widget-menu li a:hover {
   transition: all .4s;
 }
 
-footer .footer-bottom p,
+.footer-bottom p,
 footer .footer-widgets .widget-menu li a,
 footer .footer-widgets .widget-text {
   font: 13px/1.4em "Ubuntu",sans-serif;
@@ -2160,11 +2182,52 @@ footer .footer-widgets .widget-text {
   font-weight: 300;
 }
 
-footer .footer-bottom {
+.footer-bottom {
   background: #fff;
+  border-top: 5px solid #5a1644;
 }
 
-footer .footer-bottom p {
+.footer-bottom .content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-flow: row wrap;
+  -moz-box-orient: horizontal;
+  -moz-box-direction: normal;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -moz-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.footer-bottom .show-footer a {
+  display: inline-block;
+  background: #5a1644;
+  width: auto;
+  text-align: center;
+  cursor: pointer;
+  color: #fff;
+  padding: 15px 64px;
+  font-size: 16px;
+}
+
+.footer-bottom .show-footer a .fa {
+  margin-left: 5px;
+}
+
+.footer-bottom p.copyrights {
   color: #666;
   font-weight: 400;
   text-align: center;

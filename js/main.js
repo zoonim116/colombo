@@ -27,10 +27,10 @@ $(function() {
 $(document).ready(function() {
 
 	// show / hide sub-menu
-	// $('header .navigation .main-menu .menu-item').click(function() {
-	// 	$(this).children('.sub-menu').toggleClass('active');
-	// 	return false;
-	// });
+	$('header .navigation .main-menu .menu-item').click(function() {
+		$(this).children('.sub-menu').toggleClass('active');
+		// return false;
+	});
 
 	$('header .navigation .main-menu .menu-item').mouseenter(function() {
 		$(this).children('.sub-menu').addClass('active');
@@ -235,5 +235,19 @@ $(document).ready(function() {
 		document.body.appendChild(a);
 		a.click();
 		document.body.removeChild(a);
+    });
+
+    // show footer
+    $('footer').mouseenter(function() {
+    	$('footer .hide-block').stop().slideDown();
+    });
+
+    $('footer').mouseleave(function() {
+    	$('footer .hide-block').stop().slideUp();
+    });
+
+    $('.footer-bottom .show-footer a').click(function() {
+    	$('footer .hide-block').slideToggle();
+    	return false;
     });
 });
