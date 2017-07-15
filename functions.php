@@ -44,9 +44,15 @@ function wpdocs_theme_name_scripts() {
     wp_enqueue_script( 'main', get_template_directory_uri() . '/js/main.js', array(), '1.0.0', true );
 
     wp_enqueue_style( 'bootstrap', '//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css');
+    /********* fancybox  *******/
+    wp_enqueue_style('fancybox-css', get_template_directory_uri() . '/js/fancybox/source/jquery.fancybox.css');
+    wp_enqueue_style('fancybox-buttons-css', get_template_directory_uri() . '/js/fancybox/source/helpers/jquery.fancybox-buttons.css');
+    wp_enqueue_style('fancybox-thumbs-css', get_template_directory_uri() . '/js/fancybox/source/helpers/jquery.fancybox-thumbs.css');
+
     wp_enqueue_style('reset', get_template_directory_uri() . '/css/reset.css');
     wp_enqueue_style('vendor', get_template_directory_uri() . '/css/vendor.css');
     wp_enqueue_style('style', get_template_directory_uri() . '/css/style.css');
+
 
 }
 add_action( 'wp_enqueue_scripts', 'wpdocs_theme_name_scripts' );
@@ -172,10 +178,31 @@ function colombo_get_collections_list() {
           <? endforeach; ?>
       </ul>
   <? else: ?>
-    <p>
-      Серии не найдены
-    </p>
+    <p> Серии не найдены</p>
   <? endif; ?>
 <? }
 
 add_action('colombo_get_collections_list', 'colombo_get_collections_list', 10);
+
+
+function colombo_get_series_thumb() {
+  $the_query = new WP_Query(array(
+      'post_type' => 'interior',
+      'posts_per_page' => -1
+    ));
+
+    if ($the_query->have_posts()) { ?>
+      <ul class="colums">
+    <?   while ($the_query->have_posts()) {
+        $the_query->the_post();
+        $collecton =  get_the_terms($post->ID, 'collection')[0];?>
+        <? var_dump(); ?>
+          <li class="interior-foto <?= $collecton->slug; ?> colum-1-4">
+            <a href="#" data-desc="<?= strip_tags(get_the_content()); ?>" title="<? the_title(); ?>"><? the_post_thumbnail(); ?></a>
+        </li>
+      <?  } ?>
+      </ul>
+    <? }
+}
+
+add_action('colombo_get_series_thumb', 'colombo_get_series_thumb', 10);

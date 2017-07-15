@@ -43,7 +43,7 @@ msgstr ""
 msgid "Разделы сайта"
 msgstr ""
 
-msgid ""
+msgid "Перейти в категорию товаров"
 msgstr ""
 
 msgid ""

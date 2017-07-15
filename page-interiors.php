@@ -13,12 +13,17 @@
 						</div>
 				</div>
 				<div class="interiors-foto colum-1-1">
-					<? do_action('colombo_get_collections_thumbs'); ?>
-						<ul class="colums">
-							<li class="interior-foto status colum-1-4">
-								<a href="#" data-desc="Выдвижные индивидуальные решения. Два умывальники из высококачественного расширить концепцию промывки области безбарьерных решений Keramag. Agilo на площади и Privo в круговой конструкции для оптимальной адаптации к общему дизайну комнаты. Оба умывальники соответствуют стандарту DIN 18040 для безбарьерной ванной и Санитарные комнаты." title="Статус / Status"><img src="images/series-img1.jpg" alt="Статус / Status"></a>
-							</li>
-						</ul>
+					<? do_action('colombo_get_series_thumb'); ?>
+					<div id="modal-interior" class="modal-interior hide">
+							<div class="container" style="max-width: 750px;">
+								<p class="interior-title"></p>
+								<div class="modal-img"><img src="" alt=""></div>
+								<div class="modal-text">
+									<p></p>
+									<a href="#" class="category-link"><?= __('Перейти в категорию товаров'); ?> </a>
+								</div>
+							</div>
+						</div>
 					</div>
     </div>
   </div>
