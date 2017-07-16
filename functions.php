@@ -145,6 +145,10 @@ function colombo_get_page_title() {
 
 add_action('colombo_get_page_title', 'colombo_get_page_title', 10);
 
+
+/**
+ * Show series thummb list on series pages.
+ */
 function colombo_show_series() {
   $terms = get_terms( array(
     'taxonomy' => 'pa_seriya',
@@ -165,6 +169,10 @@ function colombo_show_series() {
 
 add_action('colombo_show_series', 'colombo_show_series', 10);
 
+
+/**
+ * Show select with series collections.
+ */
 function colombo_get_collections_list() {
   $taxonomies = get_terms([
       'taxonomy' => 'collection',
@@ -178,12 +186,16 @@ function colombo_get_collections_list() {
           <? endforeach; ?>
       </ul>
   <? else: ?>
-    <p> Серии не найдены</p>
+    <p> <?= __('Серии не найдены'); ?></p>
   <? endif; ?>
 <? }
 
 add_action('colombo_get_collections_list', 'colombo_get_collections_list', 10);
 
+
+/**
+ * Show the series thumb .
+ */
 
 function colombo_get_series_thumb() {
   $the_query = new WP_Query(array(
@@ -206,3 +218,113 @@ function colombo_get_series_thumb() {
 }
 
 add_action('colombo_get_series_thumb', 'colombo_get_series_thumb', 10);
+
+/**
+ * Show the list of news on news page .
+ */
+
+function colombo_show_news_thumbs () {
+  if (isset($_GET['view_all']) &&  $_GET['view_all'] == 1) {
+    $newsCount = -1;
+  } else {
+    $newsCount = get_option('posts_per_page');
+  }
+  $the_query = new WP_Query(array(
+      'post_type' => 'news',
+      'posts_per_page' => $newsCount
+    ));
+
+    if ($the_query->have_posts()) {
+      while ($the_query->have_posts()) {
+        $the_query->the_post(); ?>
+          <div class="colum-1-1">
+            <article class="colums">
+              <div class="post-image colum-1-3">
+                <a href="<? the_permalink(); ?>">
+                  <? the_post_thumbnail(); ?>
+                </a>
+              </div>
+              <div class="post-content colum-2-3">
+                <p class="post-date"><?= get_the_date('d.m.Y'); ?></p>
+                <h3 class="post-title">
+                  <a href="<? the_permalink(); ?>"><? the_title(); ?></a>
+                </h3>
+                <p class="post-description"><? the_content(''); ?></p>
+                <a href="<? the_permalink(); ?>" class="read-more"><?= __('подробнее'); ?></a>
+              </div>
+            </article>
+          </div>
+      <? }
+    }
+}
+
+add_action('colombo_show_news_thumbs', 'colombo_show_news_thumbs', 10);
+
+
+/**
+ * Display show all link on news page
+ */
+
+function colombo_show_show_all_link() {
+  if (!isset($_GET['view_all']) &&  $_GET['view_all'] !== 1) { ?>
+    <p class="show-all">
+      <a href="?view_all=1"><?= __('Показать все'); ?></a>
+    </p>
+ <? }
+}
+
+add_action('colombo_show_show_all_link', 'colombo_show_show_all_link', 10);
+
+
+function colombo_show_new_pagination() {
+  global $wp_query;
+  $big = 999999999; // need an unlikely integer
+  if( get_option('permalink_structure') ) {
+    $format = '&paged=%#%';
+  } else {
+    $format = 'page/%#%/';
+  }
+  $pages =  paginate_links(array(
+    'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+    'format' => $format,
+    'type' => 'array',
+    'current' => max( 1, get_query_var('paged') ),
+    'prev_text' => '<i class="fa fa-angle-left"></i>',
+    'next_text' => '<i class="fa fa-angle-right"></i>',
+    'total' => $wp_query->max_num_pages
+  ));
+
+  ?>
+  <ul class="pagination-list">
+    <? foreach ($pages as $page) { ?>
+      <li>
+        <?= $page; ?>
+      </li>
+  <?  } ?>
+  </ul>
+<?}
+
+add_action('colombo_show_new_pagination', 'colombo_show_new_pagination', 10);
+
+
+function colombo_customize_register( $wp_customize ) {
+   //All our sections, settings, and controls will be added here
+   $wp_customize->add_section( 'mytheme_new_section_name' , array(
+      'title'      => __( 'Заголовки страниц'),
+      'priority'   => 10,
+    ));
+    $wp_customize->add_setting('news_page_title', array(
+     'default'        => 'Новости и новинки от Colombo',
+     ));
+
+    $wp_customize->add_control( new WP_Customize_Control(
+    	$wp_customize,
+    	'news_page_title',
+    	array(
+    		'label'      => __( 'Страница списка новостей:' ),
+    		'section'    => 'mytheme_new_section_name',
+        'type'    => 'text',
+    	)
+    ));
+}
+add_action( 'customize_register', 'colombo_customize_register' );
