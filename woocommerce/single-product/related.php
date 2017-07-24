@@ -22,10 +22,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( $related_products ) : ?>
 
-	<section class="related products">
+	<div class="else-products">
 
-		<h2><?php esc_html_e( 'Related products', 'woocommerce' ); ?></h2>
-
+		<h2><?= __( 'Другая сантехника для ванных комнат этой серии', 'Colombo' ); ?></h2>
+		<div class="all-products colums">
 		<?php woocommerce_product_loop_start(); ?>
 
 			<?php foreach ( $related_products as $related_product ) : ?>
@@ -40,8 +40,8 @@ if ( $related_products ) : ?>
 			<?php endforeach; ?>
 
 		<?php woocommerce_product_loop_end(); ?>
-
-	</section>
+		</div>
+	</div>
 
 <?php endif;
 

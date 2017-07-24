@@ -35,8 +35,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	 	return;
 	 }
 ?>
-
-<div id="product-<?php the_ID(); ?>" <?php post_class(); ?>>
+<h1 class="page-title"><? the_title(); ?></h1>
+<div id="product-<?php the_ID(); ?>" <?php post_class('product-page'); ?>>
 
 	<?php
 		/**
@@ -48,9 +48,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 		do_action( 'woocommerce_before_single_product_summary' );
 	?>
 
-	<div class="summary entry-summary">
-
+	<div class="product-info">
+		<div class="characteristics">
+			<ul>
 		<?php
+			do_action('colombo_get_product_properties');
+
 			/**
 			 * woocommerce_single_product_summary hook.
 			 *
@@ -63,9 +66,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 			 * @hooked woocommerce_template_single_sharing - 50
 			 * @hooked WC_Structured_Data::generate_product_data() - 60
 			 */
-			do_action( 'woocommerce_single_product_summary' );
+			// do_action( 'woocommerce_single_product_summary' );
 		?>
-
+		</ul>
+		</div>
+		<div class="description">
+			<?php
+				do_action('colombo_get_product_description');
+			 ?>
+		</div>
 	</div><!-- .summary -->
 
 	<?php

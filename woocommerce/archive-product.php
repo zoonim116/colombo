@@ -30,29 +30,22 @@ get_header( 'shop' ); ?>
 		 * @hooked woocommerce_breadcrumb - 20
 		 * @hooked WC_Structured_Data::generate_website_data() - 30
 		 */
-		do_action( 'woocommerce_before_main_content' );
+		// do_action( 'woocommerce_before_main_content' );
 	?>
+<section>
+	<div class="row">
+				<h1 class="page-title"><?= __('Продукция Colombo: сантехника, керамика и мебель для ванных', 'Colombo'); ?></h1>
+			</div>
+			<div class="row dark-background">
+				<div class="container">
+					<div class="colums filters-and-serch">
+						<?php if ( is_active_sidebar( 'common_widget_area' ) ) : ?>
+							<?php dynamic_sidebar( 'common_widget_area' ); ?>
+					<?php endif; ?>
 
-    <header class="woocommerce-products-header">
 
-		<?php if ( apply_filters( 'woocommerce_show_page_title', true ) ) : ?>
-
-			<h1 class="woocommerce-products-header__title page-title"><?php woocommerce_page_title(); ?></h1>
-
-		<?php endif; ?>
-
-		<?php
-			/**
-			 * woocommerce_archive_description hook.
-			 *
-			 * @hooked woocommerce_taxonomy_archive_description - 10
-			 * @hooked woocommerce_product_archive_description - 10
-			 */
-			do_action( 'woocommerce_archive_description' );
-		?>
-
-    </header>
-
+				</div>
+				<div class="all-products colums">
 		<?php if ( have_posts() ) : ?>
 
 			<?php
@@ -63,10 +56,10 @@ get_header( 'shop' ); ?>
 				 * @hooked woocommerce_result_count - 20
 				 * @hooked woocommerce_catalog_ordering - 30
 				 */
-				do_action( 'woocommerce_before_shop_loop' );
+				// do_action( 'woocommerce_before_shop_loop' );
 			?>
 
-			<?php woocommerce_product_loop_start(); ?>
+			<?php //woocommerce_product_loop_start(); ?>
 
 				<?php woocommerce_product_subcategories(); ?>
 
@@ -85,16 +78,21 @@ get_header( 'shop' ); ?>
 
 				<?php endwhile; // end of the loop. ?>
 
-			<?php woocommerce_product_loop_end(); ?>
-
-			<?php
-				/**
-				 * woocommerce_after_shop_loop hook.
-				 *
-				 * @hooked woocommerce_pagination - 10
-				 */
-				do_action( 'woocommerce_after_shop_loop' );
-			?>
+			<?php //woocommerce_product_loop_end(); ?>
+			<div class="pagination colum-1-1">
+					<? do_action('colombo_product_counter'); ?>
+					<!-- <p class="product-count"> <?= __('Всего позиций в категории', 'Colombo') ?>: <span class="count-number">120</span></p> -->
+				<?php
+					/**
+					 * woocommerce_after_shop_loop hook.
+					 *
+					 * @hooked woocommerce_pagination - 10
+					 */
+					do_action( 'colombo_show_new_pagination' );
+					do_action( 'colombo_show_show_all_link' );
+					do_action( 'colombo_show_page_text_description');
+				?>
+			</div>
 
 		<?php elseif ( ! woocommerce_product_subcategories( array( 'before' => woocommerce_product_loop_start( false ), 'after' => woocommerce_product_loop_end( false ) ) ) ) : ?>
 
@@ -117,14 +115,17 @@ get_header( 'shop' ); ?>
 		 */
 		do_action( 'woocommerce_after_main_content' );
 	?>
-
+		</div>
+		</div>
+	</div>
 	<?php
+
 		/**
 		 * woocommerce_sidebar hook.
 		 *
 		 * @hooked woocommerce_get_sidebar - 10
 		 */
-		do_action( 'woocommerce_sidebar' );
+		// do_action( 'woocommerce_sidebar' );
 	?>
-
+</section>
 <?php get_footer( 'shop' ); ?>

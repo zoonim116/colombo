@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Colombo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-11 11:04+0000\n"
-"PO-Revision-Date: 2017-07-11 17:16+0000\n"
+"POT-Creation-Date: 2017-07-24 08:16+0000\n"
+"PO-Revision-Date: 2017-07-24 08:16+0000\n"
 "Last-Translator: clmb_admin <admin@colombo.loc>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -14,14 +14,67 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco - https://localise.biz/"
 
-#. Name of the theme
-msgid "Colombo"
-msgstr "Colombo"
-
 #. Description of the theme
 msgid "WP Theme + Woocommerce Theme for colombo.ua"
 msgstr ""
 
-#. Author of the theme
-msgid "Maxim Nepomniashiy"
+msgid "Серии сантехники и керамики для ванных комнат от Colombo"
 msgstr ""
+
+msgid "Перейти в категорию товаров"
+msgstr ""
+
+msgid "Последние новости от colombo"
+msgstr ""
+
+msgid "Показать все"
+msgstr ""
+
+msgid "подробнее"
+msgstr ""
+
+msgid "Всего позиций в категории"
+msgstr ""
+
+msgid "Другая сантехника для ванных комнат этой серии"
+msgstr ""
+
+msgid "Все интерьеры"
+msgstr "Всі інтер'єри"
+
+#. Name of the theme
+msgid "Colombo"
+msgstr "Colombo"
+
+msgid "Современная сантехника для ванных комнат"
+msgstr "Сучасна сантехніка для ванних кімнат"
+
+msgid "Новости"
+msgstr "Новини"
+
+msgid "Новость"
+msgstr "Новина"
+
+msgid "Серии"
+msgstr "Cерії"
+
+msgid "Категории"
+msgstr "КАТЕГОРІЇ"
+
+msgid "Разделы сайта"
+msgstr "Розділи сайту"
+
+msgid "Продукция"
+msgstr "Продукцiя"
+
+msgid "Главная"
+msgstr "Головна"
+
+msgid "Общие фильтры категорий"
+msgstr "Загальні фільтри категорій"
+
+msgid "Описание"
+msgstr "Опис"
+
+msgid "Интерьеры"
+msgstr "Iнтер'єри"

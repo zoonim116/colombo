@@ -46,6 +46,48 @@ msgstr ""
 msgid "Перейти в категорию товаров"
 msgstr ""
 
+msgid "Последние новости от colombo"
+msgstr ""
+
+msgid "Показать все"
+msgstr ""
+
+msgid "подробнее"
+msgstr ""
+
+msgid "Продукция"
+msgstr ""
+
+msgid "Главная"
+msgstr ""
+
+msgid "Общие фильтры категорий"
+msgstr ""
+
+msgid "Всего позиций в категории"
+msgstr ""
+
+msgid "Другая сантехника для ванных комнат этой серии"
+msgstr ""
+
+msgid "Описание"
+msgstr ""
+
+msgid "Интерьеры"
+msgstr ""
+
+msgid "Все интерьеры"
+msgstr ""
+
+msgid "Серии не найдены"
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
 msgid ""
 msgstr ""
 

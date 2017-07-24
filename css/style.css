@@ -26,6 +26,7 @@ li {
 img {
   width: auto;
   max-width: 100%;
+  height: auto;
 }
 
 input:focus,
@@ -394,7 +395,7 @@ header .langs-list a {
   justify-content: flex-end;
 }
 
-.search form input[type=text] {
+.search form input[type=search], .search form input[type=text] {
   width: calc(100% - 36px);
   padding: 0 18px;
   border: 1px solid #e5e5e5;
@@ -1097,7 +1098,7 @@ body:not(.home) .news-novelties article .post-content .read-more {
   z-index: 5;
 }
 
-.all-products .product:nth-last-child(3),
+
 .all-products .product:nth-child(4n) {
   margin-right: 0;
 }
@@ -1137,6 +1138,7 @@ body:not(.home) .news-novelties article .post-content .read-more {
   justify-content: center;
   height: 230px;
   width: 100%;
+  overflow: hidden;
 }
 
 .all-products .product .product-image a img {
@@ -1151,6 +1153,7 @@ body:not(.home) .news-novelties article .post-content .read-more {
   -o-transition: all .4s;
   -moz-transition: all .4s;
   transition: all .4s;
+  max-width: 130px;
 }
 
 .all-products .product .product-name p {
@@ -1288,55 +1291,53 @@ body:not(.home) .news-novelties article .post-content .read-more {
 }
 
 .pagination .pagination-list {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -moz-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -moz-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
 }
 
 .pagination .pagination-list li {
   margin-right: 10px;
 }
 
-.pagination .pagination-list li a {
-  background: #ccc;
-  display: block;
-  color: #fff;
-  font-size: 12px;
-  line-height: 12px;
-  font-weight: 300;
-  width: 20px;
-  padding: 3px 0 5px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+.pagination .pagination-list li span, .pagination .pagination-list li a {
+    background: #ccc;
+    display: block;
+    color: #fff;
+    font-size: 12px;
+    line-height: 12px;
+    font-weight: 300;
+    width: 20px;
+    padding: 3px 0 5px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
 }
 
-.pagination .pagination-list li a.current,
-.pagination .pagination-list li a:hover,
-.pagination .show-all a:hover {
-  background: #7b4569;
-  -webkit-transition: all .4s;
-  -o-transition: all .4s;
-  -moz-transition: all .4s;
-  transition: all .4s;
+.pagination .pagination-list li span.current, .pagination .pagination-list li a.current, .pagination .pagination-list li a:hover, .pagination .show-all a:hover {
+    background: #7b4569;
+    -webkit-transition: all .4s;
+    -o-transition: all .4s;
+    -moz-transition: all .4s;
+    transition: all .4s;
+    text-align: center;
 }
 
-.pagination .pagination-list li.next a,
-.pagination .pagination-list li.prev a {
-  background: transparent;
-  color: #666;
+.pagination .pagination-list li.next a, .pagination .pagination-list li.prev a, .pagination .pagination-list li a.next, .pagination .pagination-list li a.prev {
+    background: transparent;
+    color: #666;
 }
 
 .pagination .pagination-list li.next a .fa,
@@ -2833,6 +2834,10 @@ footer .footer-widgets .widget-text {
   transition: opacity .3s ease,visibility .3s ease,transform .3s cubic-bezier(.71,1.7,.77,1.24),-webkit-transform .3s cubic-bezier(.71,1.7,.77,1.24),-moz-transform .3s cubic-bezier(.71,1.7,.77,1.24),-o-transform .3s cubic-bezier(.71,1.7,.77,1.24);
 }
 
+.widgettitle {
+  display: none;
+}
+
 @media (max-width: 1170px) {
   header .content .navigation {
     flex: 0 0 24px;
@@ -3207,6 +3212,10 @@ footer .footer-widgets .widget-text {
 
 @media (max-width: 736px) {
   .home header {
+  	padding-bottom: 15px;
+  }
+
+  .home header {
     padding-bottom: 0;
   }
 
@@ -3365,10 +3374,6 @@ footer .footer-widgets .widget-text {
     -ms-flex: 0 0 50%;
     flex: 0 0 50%;
   }
-
-  /* .all-products .product:nth-child(3n)::after {
-    width: 0;
-  } */
 
   .all-products .product:nth-child(2n)::after {
     background: #ededed;

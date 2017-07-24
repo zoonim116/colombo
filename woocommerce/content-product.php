@@ -27,44 +27,39 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 	return;
 }
 ?>
-<li <?php post_class(); ?>>
+<div class="product colum-1-4">
 	<?php
 	/**
 	 * woocommerce_before_shop_loop_item hook.
 	 *
 	 * @hooked woocommerce_template_loop_product_link_open - 10
 	 */
-	do_action( 'woocommerce_before_shop_loop_item' );
-
+	 ?>
+	 <div class="product-image">
+		 <?php do_action( 'woocommerce_before_shop_loop_item' ); ?>
+	<?php
 	/**
 	 * woocommerce_before_shop_loop_item_title hook.
 	 *
 	 * @hooked woocommerce_show_product_loop_sale_flash - 10
 	 * @hooked woocommerce_template_loop_product_thumbnail - 10
 	 */
-	do_action( 'woocommerce_before_shop_loop_item_title' );
-
-	/**
-	 * woocommerce_shop_loop_item_title hook.
-	 *
-	 * @hooked woocommerce_template_loop_product_title - 10
-	 */
-	do_action( 'woocommerce_shop_loop_item_title' );
-
-	/**
-	 * woocommerce_after_shop_loop_item_title hook.
-	 *
-	 * @hooked woocommerce_template_loop_rating - 5
-	 * @hooked woocommerce_template_loop_price - 10
-	 */
-	do_action( 'woocommerce_after_shop_loop_item_title' );
-
-	/**
-	 * woocommerce_after_shop_loop_item hook.
-	 *
-	 * @hooked woocommerce_template_loop_product_link_close - 5
-	 * @hooked woocommerce_template_loop_add_to_cart - 10
-	 */
-	do_action( 'woocommerce_after_shop_loop_item' );
+		do_action( 'woocommerce_before_shop_loop_item_title' );
+		do_action( 'woocommerce_after_shop_loop_item' );
 	?>
-</li>
+	</div>
+
+	<div class="product-name">
+		<p>
+	<?php
+		do_action( 'woocommerce_before_shop_loop_item' ); ?>
+		<? if(strlen(get_the_title()) > 64 ): ?>
+			<span class="name"><?= mb_substr(get_the_title(), 0, 60 ).'...'; ?></span>
+		<? else: ?>
+			<span class="name"><?= get_the_title(); ?></span>
+		<? endif; ?>
+	 <?php do_action( 'woocommerce_after_shop_loop_item' );
+	?>
+	</p>
+</div>
+</div>

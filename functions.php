@@ -158,7 +158,7 @@ function colombo_show_series() {
       $img = get_wp_term_image($term->term_id); ?>
       <div class="colum-1-4">
 				<div class="series">
-					<a href="#">
+					<a href="<?= get_permalink(98).'?filtering=1&filter_seriya='.$term->slug; ?>">
 						<img src="<?= $img;?>" alt="<?= $term->name; ?>" title="<?= $term->name; ?>">
 						<span class="series-name"><?= $term->name; ?></span>
 					</a>
@@ -171,26 +171,26 @@ add_action('colombo_show_series', 'colombo_show_series', 10);
 
 
 /**
- * Show select with series collections.
+ * Show select with series.
  */
-function colombo_get_collections_list() {
+function colombo_get_series_list() {
   $taxonomies = get_terms([
-      'taxonomy' => 'collection',
+      'taxonomy' => 'pa_seriya',
       'hide_empty' => false
     ]);
   if ($taxonomies) : ?>
       <ul class="filters-list hide">
-          <li><a data-class="all" class="selected" href="#"><?= __('Все интерьеры'); ?></a></li>
+          <li><a data-class="all" class="selected" href="#"><?= __('Все интерьеры', 'Colombo'); ?></a></li>
           <? foreach ($taxonomies as $taxonomy) : ?>
                 <li><a data-class="<?= $taxonomy->slug; ?>" href="#"><?= $taxonomy->name; ?></a></li>
           <? endforeach; ?>
       </ul>
   <? else: ?>
-    <p> <?= __('Серии не найдены'); ?></p>
+    <p> <?= __('Серии не найдены', 'Colombo'); ?></p>
   <? endif; ?>
 <? }
 
-add_action('colombo_get_collections_list', 'colombo_get_collections_list', 10);
+add_action('colombo_get_series_list', 'colombo_get_series_list', 10);
 
 
 /**
@@ -208,7 +208,6 @@ function colombo_get_series_thumb() {
     <?   while ($the_query->have_posts()) {
         $the_query->the_post();
         $collecton =  get_the_terms($post->ID, 'collection')[0];?>
-        <? var_dump(); ?>
           <li class="interior-foto <?= $collecton->slug; ?> colum-1-4">
             <a href="#" data-desc="<?= strip_tags(get_the_content()); ?>" title="<? the_title(); ?>"><? the_post_thumbnail(); ?></a>
         </li>
@@ -249,7 +248,7 @@ function colombo_show_news_thumbs () {
                 <h3 class="post-title">
                   <a href="<? the_permalink(); ?>"><? the_title(); ?></a>
                 </h3>
-                <p class="post-description"><? the_content(''); ?></p>
+                <div class="post-description"><? the_content(''); ?></div>
                 <a href="<? the_permalink(); ?>" class="read-more"><?= __('подробнее'); ?></a>
               </div>
             </article>
@@ -265,6 +264,7 @@ add_action('colombo_show_news_thumbs', 'colombo_show_news_thumbs', 10);
  * Display show all link on news page
  */
 
+//TODO сделать проверку надо ли вообще показывать эту кнопку, если новостей меньше чем надо показывать в настройках
 function colombo_show_show_all_link() {
   if (!isset($_GET['view_all']) &&  $_GET['view_all'] !== 1) { ?>
     <p class="show-all">
@@ -284,7 +284,7 @@ function colombo_show_new_pagination() {
   } else {
     $format = 'page/%#%/';
   }
-  $pages =  paginate_links(array(
+  $pages = paginate_links(array(
     'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
     'format' => $format,
     'type' => 'array',
@@ -296,16 +296,56 @@ function colombo_show_new_pagination() {
 
   ?>
   <ul class="pagination-list">
-    <? foreach ($pages as $page) { ?>
+    <? if($pages) {
+        foreach ($pages as $page) { ?>
       <li>
         <?= $page; ?>
       </li>
-  <?  } ?>
+      <?  }
+      } ?>
   </ul>
 <?}
 
 add_action('colombo_show_new_pagination', 'colombo_show_new_pagination', 10);
 
+function colombo_related_latest_news() {
+  global $post;
+  $the_query = new WP_Query(array(
+      'post_type' => 'news',
+      'post__not_in' => [$post->ID],
+      'posts_per_page' => 3
+    ));
+
+    if ($the_query->have_posts()) { ?>
+      <div class="news-novelties colums">
+    <?  while ($the_query->have_posts()) {
+        $the_query->the_post(); ?>
+
+    <div class="colum-1-3">
+      <article>
+        <div class="post-image">
+          <a href="<? the_permalink(); ?>">
+              <? the_post_thumbnail(); ?>
+          </a>
+        </div>
+        <div class="post-content">
+          <p class="post-date"><?= get_the_date('d.m.Y'); ?></p>
+          <h3 class="post-title">
+            <a href="<? the_permalink(); ?>"><? the_title(); ?></a>
+          </h3>
+          <div class="post-description"><? the_content(''); ?></div>
+          <a href="<? the_permalink(); ?>" class="read-more"><?= __('подробнее'); ?></a>
+        </div>
+      </article>
+    </div>
+
+<? } ?>
+    </div>
+<?  }
+}
+
+
+add_action('colombo_related_latest_news', 'colombo_related_latest_news', 10);
 
 function colombo_customize_register( $wp_customize ) {
    //All our sections, settings, and controls will be added here
@@ -328,3 +368,159 @@ function colombo_customize_register( $wp_customize ) {
     ));
 }
 add_action( 'customize_register', 'colombo_customize_register' );
+
+remove_filter('the_content', 'wpautop');
+
+/**
+ * Disable add to cart action
+ */
+remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
+
+
+/**
+ * Add widget area for common filters like categories, series, search
+ */
+function common_widgets_init() {
+  register_sidebar(array(
+    'name' => __('Общие фильтры категорий', 'Colombo'),
+    'id' => 'common_widget_area',
+    'before_widget' => '<div class="colum-1-3">',
+	   'after_widget'  => '</div>',
+  ));
+}
+
+add_action( 'widgets_init', 'common_widgets_init' );
+
+
+/**
+ * Override woocommerce widgets
+ */
+function override_woocommerce_widgets() {
+  // Ensure our parent class exists to avoid fatal error (thanks Wilgert!)
+
+  if ( class_exists( 'WC_Widget_Product_Categories' ) ) {
+    unregister_widget( 'WC_Widget_Product_Categories' );
+
+    include_once( 'widgets/widget-products_categories.php' );
+
+    register_widget( 'Custom_WC_Widget_Product_Categories' );
+  }
+
+  if ( class_exists( 'WC_Widget_Layered_Nav' ) ) {
+    unregister_widget( 'WC_Widget_Layered_Nav' );
+
+    include_once( 'widgets/widget-products_attributes.php' );
+
+    register_widget( 'Custom_Widget_Layered_Nav' );
+  }
+
+}
+
+add_action( 'widgets_init', 'override_woocommerce_widgets', 15 );
+
+
+function colombo_product_counter() {
+  if(is_product_category()) {
+      global $post;
+      $terms = get_the_terms( $post->ID, 'product_cat' ); ?>
+      <p class="product-count"> <?= __('Всего позиций в категории', 'Colombo') ?>: <span class="count-number"><?= $terms[0]->count; ?></span></p>
+  <? }
+  if(is_shop()) {
+    $count_posts = wp_count_posts( 'product' ); ?>
+     <p class="product-count"> <?= __('Всего позиций в категории', 'Colombo') ?>: <span class="count-number"><?= $count_posts->publish; ?></span></p>
+  <? }
+}
+
+add_action('colombo_product_counter', 'colombo_product_counter', 10);
+
+/**
+ * Lets check if user click show all button on woocommerce pages
+ */
+if(($_GET['view_all'] && strpos($_SERVER['REQUEST_URI'], 'product-category')) || ($_GET['view_all'] && strpos($_SERVER['REQUEST_URI'], 'categories'))) {
+  add_filter( 'loop_shop_per_page', 'new_loop_shop_per_page', 20 );
+
+    function new_loop_shop_per_page( $cols ) {
+    // $cols contains the current number of products per page based on the value stored on Options -> Reading
+    // Return the number of products you wanna show per page.
+     return - 1;
+    }
+}
+
+function get_product_category_by_slug($cat_slug)
+{
+    $category = get_term_by('slug', $cat_slug, 'product_cat', 'ARRAY_A');
+    return $category['name'];
+}
+
+function colombo_show_page_text_description() {
+  $page_id = wc_get_page_id('shop');
+  if($page_id) {
+    $query = new WP_Query;
+    $page = $query->query( array(
+    	'post_type' => 'page',
+      'p' => $page_id,
+    ) );
+    foreach( $page as $p ){
+      $contet = $p->post_content;
+    }
+    $title = get_field('page_header',$page_id);
+     ?>
+      <div class="category-description colum-1-1">
+        <h3><?= $title; ?></h3>
+        <div class="description-content">
+            <?= $contet; ?>
+        </div>
+        <a href="#" class="read-more show-text"><?= __('Подробнее', 'Colombo'); ?></a>
+      </div>
+  <? }
+}
+
+add_action('colombo_show_page_text_description', 'colombo_show_page_text_description', 10);
+
+/**
+ * Get list of product properties
+ */
+function colombo_get_product_properties() {
+  $attribute_taxonomies = wc_get_attribute_taxonomies();
+  $taxonomy_terms = array();
+  $_product = wc_get_product( get_the_ID() );
+  if ( $attribute_taxonomies ) {
+    foreach ($attribute_taxonomies as $tax) {
+      if (taxonomy_exists(wc_attribute_taxonomy_name($tax->attribute_name))) {
+          $taxonomy_terms[$tax->attribute_label] = get_terms( wc_attribute_taxonomy_name($tax->attribute_name), 'orderby=name&hide_empty=0' );
+      }
+    }
+  }
+  $out = '';
+
+  if($_product->get_sku()) {
+    $out .= "<li>". __('Артикул', 'Colombo') .": <span>" . $_product->get_sku() ." </span> </li>";
+  }
+  if($EAN = get_post_meta(get_the_ID(), '_cpf_ean', true )) {
+    $out .= "<li>". __('EAN', 'Colombo') .": <span>" . $EAN." </span> </li>";
+  }
+  foreach ($taxonomy_terms as $key => $value) {
+      $out .= "<li>". $key .": <span>" .$value[0]->name ." </span> </li>";
+  }
+
+  if(intval($_product->price) > 0) {
+    $out .= "<li>".__('Рекомендованная розничная цена', 'Colombo').$_product->get_price_html()."</li>";
+  }
+  echo $out;
+}
+
+add_action('colombo_get_product_properties', 'colombo_get_product_properties', 10);
+
+/**
+ * Get formated product description
+ */
+function colombo_get_product_description() {
+  $_product = wc_get_product( get_the_ID() );
+    echo "<p class='description-title'>".__('Описание', 'Colombo').": </p>";
+    echo "<p>".$_product->description.": </p>";
+}
+
+add_action('colombo_get_product_description', 'colombo_get_product_description', 10);
+
+remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10 );
+remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15 );

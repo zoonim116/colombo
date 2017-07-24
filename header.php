@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Language" content="ru"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /> 
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 	<meta name='yandex-verification' content='79f6f41e1a67be9b' />
   <?php if (is_admin_bar_showing()) { ?>
@@ -45,8 +46,16 @@
 			</div>
 			<div class="langs">
 				<ul class="langs-list">
-					<li class="current-lang"><a href="#">Ru</a></li>
-					<li><a href="#">Ua</a></li>
+					<? 	$uri = $_SERVER['REQUEST_URI'];
+                        $ru =  preg_replace('/ua/', 'ru', $uri, 1);
+                        $ua =  str_replace("/ru/", '/ua/', $uri);
+
+                         ?>
+					<? if (qtranxf_getLanguage() == 'ua') : ?>
+						<li class="current-lang"><a href="<?= get_site_url().'/ru'.$uri; ?>">Ru</a></li>
+					<? else : ?>
+						<li class="current-lang"><a href="<?= get_site_url(); ?><?= $ua; ?>">UA</a></li>
+					<? endif; ?>
 				</ul>
 			</div>
 			<div class="search">

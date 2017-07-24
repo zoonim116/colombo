@@ -1,7 +1,7 @@
 <?
 
 class Colombo_Nav_Walker extends Walker_Nav_Menu {
-  function start_el(&$output, $item, $depth, $args, $id) {
+  function start_el(&$output, $item, $depth, $args) {
     $class_names = join( ' ', $item->classes );
 
     $class_names = ' class="' .esc_attr( $class_names ). '"';
