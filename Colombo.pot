@@ -82,7 +82,7 @@ msgstr ""
 msgid "Серии не найдены"
 msgstr ""
 
-msgid ""
+msgid "Интересно узнать"
 msgstr ""
 
 msgid ""

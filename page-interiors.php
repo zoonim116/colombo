@@ -9,7 +9,7 @@
 							<p class="filters-title">
 								<a href="#"><span><?= __('Все интерьеры', 'Colombo'); ?></span> <i class="fa fa-angle-down"></i></a>
 							</p>
-              <? do_action('colombo_get_series_list'); ?>
+              <? do_action('colombo_get_collections_list'); ?>
 						</div>
 				</div>
 				<div class="interiors-foto colum-1-1">

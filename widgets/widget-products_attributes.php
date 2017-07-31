@@ -11,6 +11,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Custom_Widget_Layered_Nav extends WC_Widget {
 
 	/**
+	 * Stores chosen attributes
+	 * @var array
+	 */
+	private $_chosen_attributes;
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct() {
@@ -200,6 +206,29 @@ class Custom_Widget_Layered_Nav extends WC_Widget {
 		return absint( is_tax() ? get_queried_object()->slug : 0 );
 	}
 
+	protected function get_layered_nav_chosen_attributes() {
+		if ( ! is_array( $this->_chosen_attributes ) ) {
+			$this->_chosen_attributes = array();
+
+			if ( $attribute_taxonomies = wc_get_attribute_taxonomies() ) {
+				foreach ( $attribute_taxonomies as $tax ) {
+					$attribute    = wc_sanitize_taxonomy_name( $tax->attribute_name );
+					$taxonomy     = wc_attribute_taxonomy_name( $attribute );
+					$filter_terms = ! empty( get_query_var('filter_' . $attribute ) ) ? explode( ',', wc_clean( get_query_var('filter_' . $attribute ) ) ) : array();
+
+					if ( empty( $filter_terms ) || ! taxonomy_exists( $taxonomy ) ) {
+						continue;
+					}
+
+					$query_type = ! empty( $_GET[ 'query_type_' . $attribute ] ) && in_array( $_GET[ 'query_type_' . $attribute ], array( 'and', 'or' ) ) ? wc_clean( $_GET[ 'query_type_' . $attribute ] ) : '';
+					$this->_chosen_attributes[ $taxonomy ]['terms']      = array_map( 'sanitize_title', $filter_terms ); // Ensures correct encoding
+					$this->_chosen_attributes[ $taxonomy ]['query_type'] = $query_type ? $query_type : apply_filters( 'woocommerce_layered_nav_default_query_type', 'and' );
+				}
+			}
+		}
+		return $this->_chosen_attributes;
+	}
+
 	/**
 	 * Show dropdown layered nav.
 	 * @param  array $terms
@@ -212,7 +241,7 @@ class Custom_Widget_Layered_Nav extends WC_Widget {
 
 		if ( $taxonomy !== $this->get_current_taxonomy() ) {
 			$term_counts          = $this->get_filtered_term_product_counts( wp_list_pluck( $terms, 'term_id' ), $taxonomy, $query_type );
-			$_chosen_attributes   = WC_Query::get_layered_nav_chosen_attributes();
+			$_chosen_attributes   = $this->get_layered_nav_chosen_attributes();
 			$taxonomy_filter_name = str_replace( 'pa_', '', $taxonomy );
 			$taxonomy_label       = wc_attribute_label( $taxonomy );
       if ($taxonomy == 'pa_seriya') {
@@ -229,7 +258,8 @@ class Custom_Widget_Layered_Nav extends WC_Widget {
       } else {
           $any_label            = apply_filters( 'woocommerce_layered_nav_any_label', sprintf( __( 'Any %s', 'woocommerce' ), $taxonomy_label ), $taxonomy_label, $taxonomy );
       }
-
+			$lang = '';
+			if(qtranxf_getLanguage() == 'ru') $lang = '/ru';
       echo "<div class='filters ". esc_attr( $taxonomy_filter_name ) ." '>";
       echo "<p class='filters-title'>";
       echo "<a href='#'>". esc_html( $any_label ) ." <i class='fa fa-angle-down'></i></a>";
@@ -238,7 +268,11 @@ class Custom_Widget_Layered_Nav extends WC_Widget {
 			if ($taxonomy == 'pa_seriya') {
 				if($_chosen_attributes) {
 						$any_label            = apply_filters( 'woocommerce_layered_nav_any_label', sprintf( __( '%s', 'woocommerce' ), $taxonomy_label ), $taxonomy_label, $taxonomy );
-						echo "<li><a data-link='".esc_attr( $taxonomy_filter_name )."_filter' href=''>". $any_label ."</a></li>";
+						if (is_product_category()) {
+								echo "<li><a data-link='".esc_attr( $taxonomy_filter_name )."_filter' href='".$lang."/product-category/'>". $any_label ."</a></li>";
+						} else {
+							echo "<li><a data-link='".esc_attr( $taxonomy_filter_name )."_filter' href='".get_permalink( wc_get_page_id( 'shop' ) )."'>". $any_label ."</a></li>";
+						}
 				}
 			}
 			foreach ( $terms as $term ) {
@@ -260,17 +294,25 @@ class Custom_Widget_Layered_Nav extends WC_Widget {
 				} elseif ( 0 === $count && ! $option_is_set ) {
 					continue;
 				}
-        echo "<li><a data-link='".esc_attr( $taxonomy_filter_name )."_filter' href='". esc_attr( $term->slug ) . "'>". esc_html( $term->name ) ."</a></li>";
+				if (is_product_category()) {
+		        global $wp_query;
+		        $cat = $wp_query->get_queried_object();
+		        echo "<li><a data-link='".esc_attr( $taxonomy_filter_name )."_filter' href='".$lang."/product-category/". $cat->slug . '/'. esc_attr( $term->slug ) . "'>". esc_html( $term->name ) ."</a></li>";
+		    } else {
+        	echo "<li><a data-link='".esc_attr( $taxonomy_filter_name )."_filter' href='".get_permalink( wc_get_page_id( 'shop' ) ). esc_attr( $term->slug ) . "'>". esc_html( $term->name ) ."</a></li>";
+				}
 			}
       echo "</ul>";
 			echo '</div>';
-      wc_enqueue_js( "
-        jQuery('.colum-1-3 .filters [data-link=\'".esc_js( $taxonomy_filter_name )."_filter\']').on('click', function(e){
-          e.preventDefault();
-          var slug = jQuery( this ).attr('href');
-    		 	location.href = '" . preg_replace( '%\/page\/[0-9]+%', '', str_replace( array( '&amp;', '%2C' ), array( '&', ',' ), esc_js( add_query_arg( 'filtering', '1', remove_query_arg( array( 'page', 'filter_' . $taxonomy_filter_name ) ) ) ) ) ) . "&filter_" . esc_js( $taxonomy_filter_name ) . "=' + slug;
-        });
-      " );
+      // wc_enqueue_js( "
+      //   jQuery('.colum-1-3 .filters [data-link=\'".esc_js( $taxonomy_filter_name )."_filter\']').on('click', function(e){
+      //     e.preventDefault();
+      //     var slug = jQuery( this ).attr('href');
+			// 		console.log(slug);
+			// 		debugger;
+    	// 	 	location.href = '" . preg_replace( '%\/page\/[0-9]+%', '', str_replace( array( '&amp;', '%2C' ), array( '&', ',' ), esc_js( add_query_arg( 'filtering', '1', remove_query_arg( array( 'page', 'filter_' . $taxonomy_filter_name ) ) ) ) ) ) . "&filter_" . esc_js( $taxonomy_filter_name ) . "=' + slug;
+      //   });
+      // " );
 		}
 
 		return $found;
@@ -471,7 +513,7 @@ class Custom_Widget_Layered_Nav extends WC_Widget {
 
 			if ( $count > 0 || $option_is_set ) {
 				$link      = esc_url( apply_filters( 'woocommerce_layered_nav_link', $link, $term, $taxonomy ) );
-				$term_html = '<a href="' . $link . '">' . esc_html( $term->name ) . '</a>';
+				$term_html = '<a href="' . $link . '" >' . esc_html( $term->name ) . '</a>';
 			} else {
 				$link      = false;
 				$term_html = '<span>' . esc_html( $term->name ) . '</span>';

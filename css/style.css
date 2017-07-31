@@ -988,86 +988,53 @@ body:not(.home) .news-novelties article .post-content .read-more {
 }
 
 .all-filters {
-  margin-bottom: 30px;
-  padding: 15px;
-  background: #fff;
-  border: 1px solid #ededed;
+    margin-bottom: 30px;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #ededed;
 }
 
-.all-filters .filters-title {
-  font: 500 16px "Ubuntu",sans-serif;
-  color: #5a1644;
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 100%;
-  -moz-box-flex: 0;
-  -ms-flex: 0 0 100%;
-  flex: 0 0 100%;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #ededed;
-  margin-bottom: 15px;
-  text-transform: uppercase;
+.all-filters .widget_layered_nav .widget-title {
+        display: block;
+        font: 700 15px "Ubuntu",sans-serif;
+        color: #404040;
+        margin-bottom: 15px;
 }
 
-.all-filters fieldset {
-  border: none;
-  margin: 0;
-  padding: 0;
+.all-filters .widget_layered_nav .wc-layered-nav-term {
+        margin-bottom: 5px;
 }
 
-.all-filters fieldset legend {
-  font: 700 15px "Ubuntu",sans-serif;
-  color: #404040;
-  margin-bottom: 15px;
+.all-filters .widget_layered_nav .wc-layered-nav-term:last-child {
+        margin-bottom: 0;
 }
 
-.all-filters fieldset .checkbox {
-  margin-bottom: 5px;
+.all-filters .widget_layered_nav .wc-layered-nav-term a {
+        position: relative;
+        display: inline-block;
+        font: 13px "Ubuntu",sans-serif;
+        color: #666;
+        padding: 0 0 0 30px;
+        vertical-align: middle;
+        cursor: pointer;
 }
 
-.all-filters fieldset .checkbox:last-child {
-  margin-bottom: 0;
+.all-filters .widget_layered_nav .wc-layered-nav-term a:before {
+        background: url(../images/check_off.png) no-repeat center/16px;
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 16px;
+        height: 16px;
 }
 
-.all-filters fieldset .checkbox label {
-  font: 13px "Ubuntu",sans-serif;
-  color: #666;
-  vertical-align: middle;
-  cursor: pointer;
+.all-filters .widget_layered_nav .wc-layered-nav-term.chosen a:before {
+        background: url(../images/check_on.png) no-repeat center/16px;
 }
 
-.all-filters fieldset .checkbox input[type=checkbox] {
-  vertical-align: top;
-  width: 17px;
-  height: 17px;
-  margin: 0 3px 0 0;
-}
-
-.all-filters fieldset .checkbox input[type=checkbox]+label {
-  cursor: pointer;
-}
-
-.all-filters fieldset .checkbox input[type=checkbox]:not(checked) {
-  position: absolute;
-  opacity: 0;
-}
-
-.all-filters fieldset .checkbox input[type=checkbox]:not(checked)+label {
-  position: relative;
-  padding: 0 0 0 30px;
-}
-
-.all-filters fieldset .checkbox input[type=checkbox]:not(checked)+label::before {
-  background: url(../images/check_off.png) no-repeat center/16px;
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 16px;
-  height: 16px;
-}
-
-.all-filters fieldset .checkbox input[type=checkbox]:checked+label::before {
-  background: url(../images/check_on.png) no-repeat center/16px;
+.all-filters .widget_layered_nav .wc-layered-nav-term span.count {
+        display: none;
 }
 
 .all-products {
@@ -3052,6 +3019,11 @@ footer .footer-widgets .widget-text {
 @media (max-width: 980px) {
   main {
     min-height: 75vh;
+  }
+
+  .all-filters .widget_layered_nav {
+    display: none;
+    margin: 15px 10px;
   }
 
   .colums .colum-1-2 {

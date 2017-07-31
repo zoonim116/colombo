@@ -145,6 +145,22 @@ $(document).ready(function() {
     	});
     }
 
+
+
+   $('a[rel="production-galery"]').each(function() {
+        // note the use of "this" rather than a function argument
+        $(this).fancybox({
+            'autoScale': true,
+            'transitionIn': 'elastic',
+            'transitionOut': 'elastic',
+            'speedIn': 500,
+            'speedOut': 300,
+            'autoDimensions': true,
+            'centerOnScroll': true
+        });
+        return false;
+    });
+
     // Photo replacement
     $('.product-page .thumbs li a').click(function() {
     	$('.product-page .main-photo img').fadeOut(0);
@@ -191,11 +207,12 @@ $(document).ready(function() {
     });
 
     $('.all-filters .filters-title').click(function() {
-    	if ($(window).width() <= '980') {
-    		$('.all-filters fieldset').fadeToggle(1000);
-    		$(this).toggleClass('active');
-    		return false;
-    	}
+    	// if ($(window).width() <= '980') {
+    	// 	$('.all-filters fieldset').fadeToggle(1000);
+    	// 	$(this).toggleClass('active');
+    	// 	return false;
+    	// }
+    	$('.all-filters .widget_layered_nav').slideToggle(800);
     });
 
     // interiors-foto
@@ -203,9 +220,11 @@ $(document).ready(function() {
     	var interiorTitle = $(this).attr('title');
     	var interiorImg = $(this).children('img').attr('src');
     	var interiorDesc = $(this).attr('data-desc');
+      var interiorUrl = $(this).attr('data-url');
     	$('#modal-interior .interior-title').text(interiorTitle);
     	$('#modal-interior .modal-img img').attr('src', interiorImg);
     	$('#modal-interior .modal-text p').text(interiorDesc);
+      $('#modal-interior .modal-text a').attr('href', interiorUrl);
     	$.fancybox.open({
 			href : '#modal-interior'
 		});
@@ -250,4 +269,9 @@ $(document).ready(function() {
     	$('footer .hide-block').slideToggle();
     	return false;
     });
+
+    //Widget fix
+      if($('.widget_layered_nav').length === 0) {
+        $('.all-filters').remove();
+      }
 });

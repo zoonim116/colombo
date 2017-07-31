@@ -31,6 +31,8 @@ get_header( 'shop' ); ?>
 		 * @hooked WC_Structured_Data::generate_website_data() - 30
 		 */
 		// do_action( 'woocommerce_before_main_content' );
+		// echo "<pre>";
+		// die(var_dump($_GET));
 	?>
 <section>
 	<div class="row">
@@ -41,11 +43,15 @@ get_header( 'shop' ); ?>
 					<div class="colums filters-and-serch">
 						<?php if ( is_active_sidebar( 'common_widget_area' ) ) : ?>
 							<?php dynamic_sidebar( 'common_widget_area' ); ?>
-					<?php endif; ?>
-
-
-				</div>
-				<div class="all-products colums">
+						<?php endif; ?>
+					</div>
+					<? if(is_product_category() && is_active_sidebar('internal_filters_widget_area')) : ?>
+						<div class="all-filters colums">
+							<p class="filters-title colum-1-1"><?= __('Фильтра', 'Colombo'); ?></p>
+							<?php dynamic_sidebar( 'internal_filters_widget_area' ); ?>
+						</div>
+					<? endif; ?>
+					<div class="all-products colums">
 		<?php if ( have_posts() ) : ?>
 
 			<?php

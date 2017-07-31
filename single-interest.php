@@ -11,10 +11,6 @@
 				<? the_content();?>
 			</article>
       <? endwhile; ?>
-			<div class="else-news">
-				<h5 class="else-news-title"><?= __('Последние новости от colombo'); ?></h5>
-				<? do_action('colombo_related_latest_news'); ?>
-			</div>
 		</div>
 	</div>
 </section>

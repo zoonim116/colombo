@@ -33,7 +33,7 @@ function my_theme_setup(){
 /**************************************************** Register scripts and styles *********************************************************************/
 function wpdocs_theme_name_scripts() {
     wp_enqueue_script( 'jquery' );
-    wp_enqueue_script( 'google-maps', '//maps.google.com/maps/api/js?sensor=false&amp;language=en', array(), '1.0.0', true );
+    // wp_enqueue_script( 'google-maps', '//maps.google.com/maps/api/js?sensor=false&amp;language=en', array(), '1.0.0', true );
     wp_enqueue_script( 'vendor', get_template_directory_uri() . '/js/vendor.js', array(), '1.0.0', true );
     wp_enqueue_script( 'mousewheel', get_template_directory_uri() . '/js/fancybox/lib/jquery.mousewheel-3.0.6.pack.js', array(), '1.0.0', true );
     wp_enqueue_script( 'fancybox-pack', get_template_directory_uri() . '/js/fancybox/source/jquery.fancybox.pack.js', array(), '2.1.5', true );
@@ -158,7 +158,7 @@ function colombo_show_series() {
       $img = get_wp_term_image($term->term_id); ?>
       <div class="colum-1-4">
 				<div class="series">
-					<a href="<?= get_permalink(98).'?filtering=1&filter_seriya='.$term->slug; ?>">
+					<a href="<?= get_permalink(98).$term->slug; ?>">
 						<img src="<?= $img;?>" alt="<?= $term->name; ?>" title="<?= $term->name; ?>">
 						<span class="series-name"><?= $term->name; ?></span>
 					</a>
@@ -171,11 +171,11 @@ add_action('colombo_show_series', 'colombo_show_series', 10);
 
 
 /**
- * Show select with series.
+ * Show select with series collections.
  */
-function colombo_get_series_list() {
+function colombo_get_collections_list() {
   $taxonomies = get_terms([
-      'taxonomy' => 'pa_seriya',
+      'taxonomy' => 'collection',
       'hide_empty' => false
     ]);
   if ($taxonomies) : ?>
@@ -190,7 +190,7 @@ function colombo_get_series_list() {
   <? endif; ?>
 <? }
 
-add_action('colombo_get_series_list', 'colombo_get_series_list', 10);
+add_action('colombo_get_collections_list', 'colombo_get_collections_list', 10);
 
 
 /**
@@ -207,13 +207,23 @@ function colombo_get_series_thumb() {
       <ul class="colums">
     <?   while ($the_query->have_posts()) {
         $the_query->the_post();
+        $redirect_url = '';
+        if(get_field('url_for_redirect')) {
+          if(qtranxf_getLanguage() == 'ua') {
+            $redirect_url = get_field('url_for_redirect');
+          } else {
+            $redirect_url = '/'. qtranxf_getLanguage() . get_field('url_for_redirect');
+          }
+        }
         $collecton =  get_the_terms($post->ID, 'collection')[0];?>
           <li class="interior-foto <?= $collecton->slug; ?> colum-1-4">
-            <a href="#" data-desc="<?= strip_tags(get_the_content()); ?>" title="<? the_title(); ?>"><? the_post_thumbnail(); ?></a>
+            <a href="#" data-url="<?= $redirect_url; ?>" data-desc="<?= strip_tags(get_the_content()); ?>" title="<? the_title(); ?>"><? the_post_thumbnail(); ?></a>
         </li>
       <?  } ?>
       </ul>
-    <? }
+    <? } else { ?>
+        <p> <?= __('Серии не найдены', 'Colombo'); ?></p>
+  <?  }
 }
 
 add_action('colombo_get_series_thumb', 'colombo_get_series_thumb', 10);
@@ -259,6 +269,36 @@ function colombo_show_news_thumbs () {
 
 add_action('colombo_show_news_thumbs', 'colombo_show_news_thumbs', 10);
 
+/**
+ * Show the list of interests on interesting page .
+ */
+
+function colombo_get_interest_lists () {
+  $the_query = new WP_Query(array(
+      'post_type' => 'interest',
+      'posts_per_page' => -1
+    ));
+
+    if ($the_query->have_posts()) {
+      while ($the_query->have_posts()) {
+        $the_query->the_post(); ?>
+          <div class="colum-1-3">
+            <article>
+              <div class="interesting-image">
+                <a href="<? the_permalink(); ?>">
+                  <? the_post_thumbnail(); ?>
+                </a>
+              </div>
+              <div class="interesting-content">
+                <h3> <a href="<? the_permalink(); ?>"><? the_title(); ?></a> </h3>
+              </div>
+            </article>
+          </div>
+      <? }
+    }
+}
+
+add_action('colombo_get_interest_lists', 'colombo_get_interest_lists', 10);
 
 /**
  * Display show all link on news page
@@ -266,7 +306,7 @@ add_action('colombo_show_news_thumbs', 'colombo_show_news_thumbs', 10);
 
 //TODO сделать проверку надо ли вообще показывать эту кнопку, если новостей меньше чем надо показывать в настройках
 function colombo_show_show_all_link() {
-  if (!isset($_GET['view_all']) &&  $_GET['view_all'] !== 1) { ?>
+  if (!isset($_GET['view_all']) || $_GET['view_all'] !== 1) { ?>
     <p class="show-all">
       <a href="?view_all=1"><?= __('Показать все'); ?></a>
     </p>
@@ -357,11 +397,25 @@ function colombo_customize_register( $wp_customize ) {
      'default'        => 'Новости и новинки от Colombo',
      ));
 
+     $wp_customize->add_setting('interest_page_title', array(
+      'default'        => 'О компании Colombo',
+      ));
+
     $wp_customize->add_control( new WP_Customize_Control(
     	$wp_customize,
     	'news_page_title',
     	array(
     		'label'      => __( 'Страница списка новостей:' ),
+    		'section'    => 'mytheme_new_section_name',
+        'type'    => 'text',
+    	)
+    ));
+
+    $wp_customize->add_control( new WP_Customize_Control(
+    	$wp_customize,
+    	'interest_page_title',
+    	array(
+    		'label'      => __( 'Страница списка интересно знать:' ),
     		'section'    => 'mytheme_new_section_name',
         'type'    => 'text',
     	)
@@ -386,6 +440,15 @@ function common_widgets_init() {
     'id' => 'common_widget_area',
     'before_widget' => '<div class="colum-1-3">',
 	   'after_widget'  => '</div>',
+  ));
+
+  register_sidebar(array(
+    'name' => __('Фильтры в категориях', 'Colombo'),
+    'id' => 'internal_filters_widget_area',
+    'before_widget' => '<div class="widget woocommerce widget_layered_nav colum-1-4">',
+	  'after_widget'  => '</div>',
+    'before_title'  => '<span class="gamma widget-title">',
+	   'after_title'   => '</span>'
   ));
 }
 
@@ -420,14 +483,15 @@ add_action( 'widgets_init', 'override_woocommerce_widgets', 15 );
 
 
 function colombo_product_counter() {
+
   if(is_product_category()) {
       global $post;
       $terms = get_the_terms( $post->ID, 'product_cat' ); ?>
       <p class="product-count"> <?= __('Всего позиций в категории', 'Colombo') ?>: <span class="count-number"><?= $terms[0]->count; ?></span></p>
   <? }
   if(is_shop()) {
-    $count_posts = wp_count_posts( 'product' ); ?>
-     <p class="product-count"> <?= __('Всего позиций в категории', 'Colombo') ?>: <span class="count-number"><?= $count_posts->publish; ?></span></p>
+    global $wp_query; ?>
+     <p class="product-count"> <?= __('Всего позиций в категории', 'Colombo') ?>: <span class="count-number"><?= $wp_query->found_posts; ?></span></p>
   <? }
 }
 
@@ -436,7 +500,7 @@ add_action('colombo_product_counter', 'colombo_product_counter', 10);
 /**
  * Lets check if user click show all button on woocommerce pages
  */
-if(($_GET['view_all'] && strpos($_SERVER['REQUEST_URI'], 'product-category')) || ($_GET['view_all'] && strpos($_SERVER['REQUEST_URI'], 'categories'))) {
+if((isset($_GET['view_all']) && strpos($_SERVER['REQUEST_URI'], 'product-category')) || (isset($_GET['view_all']) && strpos($_SERVER['REQUEST_URI'], 'categories'))) {
   add_filter( 'loop_shop_per_page', 'new_loop_shop_per_page', 20 );
 
     function new_loop_shop_per_page( $cols ) {
@@ -454,7 +518,7 @@ function get_product_category_by_slug($cat_slug)
 
 function colombo_show_page_text_description() {
   $page_id = wc_get_page_id('shop');
-  if($page_id) {
+  if($page_id && is_shop()) {
     $query = new WP_Query;
     $page = $query->query( array(
     	'post_type' => 'page',
@@ -503,7 +567,7 @@ function colombo_get_product_properties() {
       $out .= "<li>". $key .": <span>" .$value[0]->name ." </span> </li>";
   }
 
-  if(intval($_product->price) > 0) {
+  if(intval($_product->get_price()) > 0) {
     $out .= "<li>".__('Рекомендованная розничная цена', 'Colombo').$_product->get_price_html()."</li>";
   }
   echo $out;
@@ -516,11 +580,70 @@ add_action('colombo_get_product_properties', 'colombo_get_product_properties', 1
  */
 function colombo_get_product_description() {
   $_product = wc_get_product( get_the_ID() );
+  global $post;
     echo "<p class='description-title'>".__('Описание', 'Colombo').": </p>";
-    echo "<p>".$_product->description.": </p>";
+    echo "<p>".$post->post_content.": </p>";
 }
 
 add_action('colombo_get_product_description', 'colombo_get_product_description', 10);
 
 remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10 );
 remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15 );
+
+/**
+ * Get about company posts list
+ */
+function colombo_get_about_company_posts_list() {
+  $the_query = new WP_Query(array(
+      'post_type' => 'about',
+      'posts_per_page' => -1
+    ));
+
+    if ($the_query->have_posts()) {
+      while ($the_query->have_posts()) {
+          $the_query->the_post();
+     ?>
+      <div class="colum-1-2">
+          <div class="about">
+            <div class="about-image">
+              <a href="<?= get_field('page_href'); ?>">
+                <? the_post_thumbnail('medium'); ?>
+              </a>
+            </div>
+            <div class="about-title">
+              <h4><a href="<?= get_field('page_href'); ?>"><?= the_title(); ?></a></h4>
+            </div>
+          </div>
+        </div>
+  <? }
+    } else { ?>
+      <p> <?= __('Серии не найдены', 'Colombo'); ?></p>
+  <? }
+}
+
+add_action('colombo_get_about_company_posts_list', 'colombo_get_about_company_posts_list', 10);
+
+function add_endpoints() {
+  add_rewrite_tag('%filter_seriya%','([^&]+)');
+  add_rewrite_rule('^categories/([^/]*)/page/([0-9]{1,})/?','index.php?post_type=product&filtering=1&filter_seriya=$matches[1]&paged=$matches[2]','top');
+  add_rewrite_rule('^categories/([^/]*)?','index.php?post_type=product&filtering=1&filter_seriya=$matches[1]','top');
+  add_rewrite_rule('^product-category/([^/]*)/([^/]*)?','index.php?product_cat=$matches[1]&filtering=1&filter_seriya=$matches[2]','top');
+}
+
+add_action('init', 'add_endpoints');
+
+add_filter( 'query_vars', 'prefix_register_query_var' );
+
+function prefix_register_query_var( $vars ) {
+    $vars[] = 'filter_seriya';
+    $vars[] = 'filtering';
+    return $vars;
+}
+
+function modify_query_to_new_urls() {
+    if(get_query_var('filter_seriya') !== false) {
+      $_GET['filter_seriya'] = get_query_var('filter_seriya');
+    }
+}
+
+add_action( 'parse_query', 'modify_query_to_new_urls' );
