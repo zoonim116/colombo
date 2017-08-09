@@ -165,6 +165,8 @@ $(document).ready(function() {
     $('.product-page .thumbs li a').click(function() {
     	$('.product-page .main-photo img').fadeOut(0);
     	var newImg = $(this).attr('href');
+      var largeImg =  $(this).children().attr('data-large_image');
+      $('.product-page .main-photo a').attr('href', largeImg);
     	$('.product-page .main-photo img').attr('src', newImg).fadeIn(400);
     	return false;
     });

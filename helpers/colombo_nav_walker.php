@@ -10,6 +10,9 @@ class Colombo_Nav_Walker extends Walker_Nav_Menu {
 
     $attributes.= !empty( $item->url ) ? ' href="' .esc_attr($item->url). '"' : '';
 
+    if(!empty( $item->target )) {
+      $attributes .= ' target="'.$item->target.'"';
+    }
     $item_output = $args->before;
 
     $current_url = (is_ssl()?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];

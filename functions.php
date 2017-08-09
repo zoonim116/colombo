@@ -4,6 +4,8 @@ require_once get_template_directory() . '/helpers/required_plugins.php';
 require_once get_template_directory() . '/helpers/colombo_nav_walker.php';
 require_once get_template_directory() . '/helpers/theme_utils.php';
 require_once get_template_directory() . '/helpers/cpt.php';
+require_once get_template_directory() . '/helpers/dealers-import.php';
+require_once get_template_directory() . '/helpers/dealers.php';
 
 /************************************************** Register menus **************************************************************************/
 function register_menus() {
@@ -35,6 +37,8 @@ function wpdocs_theme_name_scripts() {
     wp_enqueue_script( 'jquery' );
     // wp_enqueue_script( 'google-maps', '//maps.google.com/maps/api/js?sensor=false&amp;language=en', array(), '1.0.0', true );
     wp_enqueue_script( 'vendor', get_template_directory_uri() . '/js/vendor.js', array(), '1.0.0', true );
+
+    wp_enqueue_script( 'jquery-latest', 'https://code.jquery.com/jquery-latest.min.js', array(), '1.0.0', true );
     wp_enqueue_script( 'mousewheel', get_template_directory_uri() . '/js/fancybox/lib/jquery.mousewheel-3.0.6.pack.js', array(), '1.0.0', true );
     wp_enqueue_script( 'fancybox-pack', get_template_directory_uri() . '/js/fancybox/source/jquery.fancybox.pack.js', array(), '2.1.5', true );
     wp_enqueue_script( 'fancybox-buttons', get_template_directory_uri() . '/js/fancybox/source/helpers/jquery.fancybox-buttons.js', array(), '1.0.5', true );
@@ -65,10 +69,10 @@ add_action( 'wp_enqueue_scripts', 'wpdocs_theme_name_scripts' );
 function colombo_get_logo() { ?>
   <svg version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 362.2 89.1" style="enable-background:new 0 0 362.2 89.1;" xml:space="preserve">
 						<style type="text/css">
-							.st0{fill:#5a1644;}
+							.st01{fill:#5a1644;}
 						</style>
 						<g>
-							<path class="st0" d="M142.4,47.5c-7.3,0-13.4,2.5-18.5,7.4c-5.1,5-7.6,11-7.6,18c0,6.3,1.8,11.6,5.2,16.1h20.9
+							<path class="st01" d="M142.4,47.5c-7.3,0-13.4,2.5-18.5,7.4c-5.1,5-7.6,11-7.6,18c0,6.3,1.8,11.6,5.2,16.1h20.9
 								c-4.4,0-7.9-1.4-10.6-4.3c-2.6-2.8-3.9-6.7-3.9-11.6c0-4.6,1.3-8.3,4-11.2c2.7-2.9,6.2-4.3,10.5-4.3c4.4,0,7.9,1.4,10.6,4.3
 								c2.6,2.8,4,6.6,4,11.4c0,4.8-1.3,8.6-4,11.4c-2.6,2.9-6.2,4.3-10.6,4.3h20.9c3.4-4.4,5.2-9.7,5.2-15.7c0-7.3-2.5-13.4-7.5-18.4
 								C155.9,50,149.7,47.5,142.4,47.5 M101,89.1h11.3V36.2H101V89.1z M70.7,47.5c-7.3,0-13.4,2.5-18.5,7.4c-5.1,5-7.6,11-7.6,18
@@ -87,7 +91,7 @@ function colombo_get_logo() { ?>
 								c-2.6-2.8-3.8-6.6-3.8-11.4c0-4.6,1.3-8.4,3.9-11.2c2.6-2.9,6-4.4,10.1-4.4c3.9,0,7.1,1.5,9.7,4.5c2.5,3,3.8,6.8,3.8,11.5
 								c0,4.4-1.3,8.1-3.9,11c-2.6,2.9-5.8,4.4-9.7,4.4h20.7c3-4.4,4.5-9.7,4.5-15.9c0-7.3-2.2-13.4-6.6-18.3
 								C282.6,49.9,277.1,47.5,270.5,47.5"/>
-							<path class="st0" d="M356.8,17.1c-0.4-3.9-10.2-8.1-20.8-2c-2.3,1.4-3.6,2.2-4.7,2.9c1.2-1.8,2.2-3.5,3.1-5c0.2-0.3,0.4-0.6,0.6-1
+							<path class="st01" d="M356.8,17.1c-0.4-3.9-10.2-8.1-20.8-2c-2.3,1.4-3.6,2.2-4.7,2.9c1.2-1.8,2.2-3.5,3.1-5c0.2-0.3,0.4-0.6,0.6-1
 								c0.3-0.5,0.5-1,0.7-1.5c0.1-0.1,0.1-0.3,0.2-0.4c0,0-0.1,0.1-0.1,0.1c1.5-5.5-2.8-12.9-14.6-9.1c-32.6,10.4-57.5,12.6-96.9,5.9
 								c-3.6-0.6,5.9,10.9,14.8,12.9c10.8,2.4,51.3-6,80.2-13.7c10.7-2.8,8.9,7.5,6.3,12.5c-0.9,1.7-1.8,3.3-3,5.2l0,0
 								c-0.3,0.5-0.6,1-1,1.6c-2.7,4.3-10.5,16-17.8,21.1c6.5-4,13.8-10.4,21.5-18.4c0.9-1,5.4-4.7,6.8-6c4.2-3.6,12.3-7.2,16.8-3.2
@@ -304,9 +308,9 @@ add_action('colombo_get_interest_lists', 'colombo_get_interest_lists', 10);
  * Display show all link on news page
  */
 
-//TODO сделать проверку надо ли вообще показывать эту кнопку, если новостей меньше чем надо показывать в настройках
 function colombo_show_show_all_link() {
-  if (!isset($_GET['view_all']) || $_GET['view_all'] !== 1) { ?>
+  global $wp_query;
+  if ((!isset($_GET['view_all']) || $_GET['view_all'] !== 1) && $wp_query->max_num_pages > 1) { ?>
     <p class="show-all">
       <a href="?view_all=1"><?= __('Показать все'); ?></a>
     </p>
@@ -603,7 +607,7 @@ function colombo_get_about_company_posts_list() {
       while ($the_query->have_posts()) {
           $the_query->the_post();
      ?>
-      <div class="colum-1-2">
+      <div class="<?= get_field('width_class'); ?>">
           <div class="about">
             <div class="about-image">
               <a href="<?= get_field('page_href'); ?>">
@@ -623,11 +627,30 @@ function colombo_get_about_company_posts_list() {
 
 add_action('colombo_get_about_company_posts_list', 'colombo_get_about_company_posts_list', 10);
 
+
+function colombo_get_videos() {
+  $the_query = new WP_Query(array(
+      'post_type' => 'clm_video',
+      'posts_per_page' => -1
+    ));
+
+    if ($the_query->have_posts()) {
+      while ($the_query->have_posts()) {
+          $the_query->the_post(); ?>
+   <h3 class="video-name"><? the_title(); ?></h3>
+    <?= get_field('youtube_code'); ?>
+  <? }
+  }
+}
+
+add_action('colombo_get_videos', 'colombo_get_videos', 10);
+
 function add_endpoints() {
   add_rewrite_tag('%filter_seriya%','([^&]+)');
   add_rewrite_rule('^categories/([^/]*)/page/([0-9]{1,})/?','index.php?post_type=product&filtering=1&filter_seriya=$matches[1]&paged=$matches[2]','top');
   add_rewrite_rule('^categories/([^/]*)?','index.php?post_type=product&filtering=1&filter_seriya=$matches[1]','top');
   add_rewrite_rule('^product-category/([^/]*)/([^/]*)?','index.php?product_cat=$matches[1]&filtering=1&filter_seriya=$matches[2]','top');
+
 }
 
 add_action('init', 'add_endpoints');
@@ -647,3 +670,57 @@ function modify_query_to_new_urls() {
 }
 
 add_action( 'parse_query', 'modify_query_to_new_urls' );
+
+
+add_filter( 'term_description', 'filter_description', 10, 4 );
+
+function filter_description($value, $term_id, $taxonomy, $context) {
+  if($taxonomy === 'clm_countries') {
+      $value = strip_tags($value);
+  }
+  return $value;
+}
+
+add_filter('upload_mimes', 'custom_upload_xml');
+
+function custom_upload_xml($mimes) {
+    $mimes = array_merge($mimes, array('xml' => 'application/xml'));
+    return $mimes;
+}
+
+/**
+ * Remove Archives: prefix
+ */
+
+add_filter( 'get_the_archive_title', function ( $title ) {
+    return str_replace('Archives: ', '', $title);
+});
+
+function add_dealer_endpoints() {
+  // add_rewrite_rule('^categories/([^/]*)/page/([0-9]{1,})/?','index.php?post_type=product&filtering=1&filter_seriya=$matches[1]&paged=$matches[2]','top');
+  // add_rewrite_rule('^categories/([^/]*)?','index.php?post_type=product&filtering=1&filter_seriya=$matches[1]','top');
+  add_rewrite_rule('^gde-kupit/([^/]*)?/([^/]*)?/([^/]*)?','index.php?pagename=gde-kupit&country=$matches[1]&region=$matches[2]&city=$matches[3]','top');
+  add_rewrite_rule('^gde-kupit/([^/]*)?/([^/]*)?','index.php?pagename=gde-kupit&country=$matches[1]&region=$matches[2]','top');
+  add_rewrite_rule('^gde-kupit/([^/]*)?','index.php?pagename=gde-kupit&country=$matches[1]','top');
+}
+
+add_action('init', 'add_dealer_endpoints');
+
+add_filter( 'query_vars', 'prefix_register_dealer_query_var' );
+
+function prefix_register_dealer_query_var( $vars ) {
+    $vars[] = 'country';
+    $vars[] = 'region';
+    $vars[] = 'city';
+    return $vars;
+}
+
+add_action('clmb_dealers_show_filter', 'clmb_dealers_filter');
+
+function clmb_dealers_filter() {
+  $deal = new Dealer();
+  $deal->renderCountries();
+  $deal->renderRegions();
+  $deal->renderCities();
+  // var_dump(get_query_var('country'));
+}

@@ -11,15 +11,18 @@ class ThemeUtils
     if(is_page()) {
       $output .= '<li><span>'.get_the_title().'</span></li>';
     }
-    if(is_archive()) {
+    if(is_archive() && !is_shop() && !is_product_category()) {
       $output .= '<li><span>'.get_the_archive_title().'</span></li>';
     }
     if(is_shop()) {
       $output .= '<li><span>'.get_the_title(98).'</span></li>';
     }
     if(is_product_category()) {
-        // $output .= '<li><a href="'.get_permalink(98).'">'.get_the_title(98).'</a></li>';
+        $output .= '<li><a href="'.get_permalink(98).'">'.get_the_title(98).'</a></li>';
         $output .= '<li><span>'.single_term_title('', false).'</span></li>';
+    }
+    if(is_search()) {
+      $output .= '<li><span>'.__('Поиск', 'Colombo').'</span></li>';
     }
     if(is_single()) {
       if(is_product()) {

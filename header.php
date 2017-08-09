@@ -58,13 +58,7 @@
 					<? endif; ?>
 				</ul>
 			</div>
-			<div class="search">
-				<span class="show-search"><i class="fa fa-search" aria-hidden="true"></i></span>
-				<form action="">
-					<input type="text" name="search-input" placeholder="Поиск">
-					<button class="search-submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-				</form>
-			</div>
+			<? get_search_form(); ?>
 		</div>
 	</header>
   <?  if(!is_home()): ?>

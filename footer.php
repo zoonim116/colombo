@@ -19,16 +19,7 @@
 				<div class="footer-widget">
 					<h5 class="widget-title"><?= __('Разделы сайта', 'Colombo'); ?></h5>
 					<div class="widget-menu">
-						<ul class="menu">
-							<li><a href="#">Продукция</a></li>
-							<li><a href="#">Серии</a></li>
-							<li><a href="#">Интерьеры</a></li>
-							<li><a href="#">Где купить</a></li>
-							<li><a href="#">Новости</a></li>
-							<li><a href="#">О компании</a></li>
-							<li><a href="#">Контакты</a></li>
-							<li><a href="#">Видео</a></li>
-						</ul>
+						<? wp_nav_menu( array( 'theme_location' => 'pages-menu', 'container' => '',  'menu_id' => '', 'menu_class' => 'menu')); ?>
 					</div>
 				</div>
 			</div>
@@ -37,7 +28,7 @@
 		<div class="footer-bottom">
 		<div class="content">
 			<p class="show-footer">
-				<a href="#"><?= __('Продукция', 'Colombo'); ?> <i class="fa fa-angle-up"></i></a>
+				<a href="#"><?= __('Карта сайта', 'Colombo'); ?> <i class="fa fa-angle-up"></i></a>
 			</p>
 			<p class="copyrights">© 2017. Copyrights by Colombo.</p>
 		</div>

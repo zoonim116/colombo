@@ -330,8 +330,23 @@ header .navigation .main-menu .menu-item .sub-menu li:last-child {
   padding-bottom: 0;
 }
 
-header .navigation .main-menu .menu-item .sub-menu li img {
-  padding-right: 10px;
+header .navigation .main-menu .menu-item.downloads .sub-menu li a {
+  position: relative;
+  display: block;
+  padding: 6px 0 7px 45px;
+}
+
+header .navigation .main-menu .menu-item.downloads .sub-menu li a:before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 0;
+  background-image: url(/wp-content/uploads/2017/08/pdf.png);
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  width: 31px;
+  height: 32px;
 }
 
 header .langs-list a,
@@ -2036,6 +2051,71 @@ body:not(.home) .news-novelties article .post-content .read-more {
   transition: all .4s;
 }
 
+.contacts-map {
+-webkit-box-align: center;
+-webkit-align-items: center;
+-moz-box-align: center;
+-ms-flex-align: center;
+align-items: center;
+padding: 0 0 30px;
+margin: 0 0 30px;
+border-bottom: 1px solid #e3e3e3;
+}
+
+.contacts-map .this-map {
+padding: 0 15px;
+}
+
+.contacts-map .map svg {
+max-height: 320px;
+}
+
+.representatives {
+margin-bottom: 30px;
+}
+
+.representatives h5 {
+color: #5a1644;
+font-family: "Ubuntu",sans-serif;
+font-size: 16px;
+line-height: 1.5em;
+font-weight: 700;
+padding-bottom: 15px;
+margin-bottom: 0;
+}
+
+.representatives .representative {
+display: flex;
+padding: 10px 15px;
+margin: 0;
+border-bottom: 1px solid #e3e3e3;
+}
+
+.representatives .representative .city,
+.representatives .representative .phone {
+flex: 0 0 50%;
+}
+
+.representatives .representative .phone {
+color: #5a1644;
+font-size: 14px;
+font-weight: 700;
+}
+
+.contacts-county .address address {
+margin-right: 0;
+}
+
+.contacts-county .address address h5 {
+color: #5a1644;
+font-family: "Ubuntu",sans-serif;
+font-size: 16px;
+line-height: 1.5em;
+font-weight: 700;
+padding-bottom: 15px;
+margin-bottom: 0;
+}
+
 .modal-interior .interior-title {
   color: #5a1644;
   font-size: 19px;
@@ -2147,6 +2227,7 @@ footer .footer-widgets .widget-menu li a,
 footer .footer-widgets .widget-text {
   position: relative;
   color: #fff;
+  font-size: 12px;
   font-weight: 300;
 }
 
@@ -2805,6 +2886,12 @@ footer .footer-widgets .widget-text {
   display: none;
 }
 
+@media (min-width: 1171px) {
+	.contacts-map .map svg {
+		height: 320px;
+	}
+}
+
 @media (max-width: 1170px) {
   header .content .navigation {
     flex: 0 0 24px;
@@ -2815,6 +2902,11 @@ footer .footer-widgets .widget-text {
     order: 2;
     padding-right: 15px;
   }
+
+  .representatives h5 {
+		padding-left: 15px;
+		padding-right: 15px;
+	}
 
   header .content .langs {
     -webkit-box-ordinal-group: 2;
@@ -2900,6 +2992,8 @@ footer .footer-widgets .widget-text {
   .contact-form .form {
     padding: 0 15px;
   }
+
+
 
   .connected-carousels .prev-stage span,
   .connected-carousels .next-stage span {
@@ -3034,6 +3128,7 @@ footer .footer-widgets .widget-text {
     flex: 0 0 100%;
   }
 
+  .colums.all-about .colum-1-2,
   .colums .colum-1-3,
   .colums .post-content.colum-2-3 {
     -webkit-box-flex: 0;
@@ -3190,6 +3285,10 @@ footer .footer-widgets .widget-text {
   .home header {
     padding-bottom: 0;
   }
+
+  .representatives .representative .phone {
+		text-align: right;
+	}
 
   header .navigation .main-menu {
     top: 55px;
@@ -3395,6 +3494,7 @@ footer .footer-widgets .widget-text {
 }
 
 @media (max-width: 414px) {
+  .colums.all-about .colum-1-2,
   .colums .colum-1-3 {
     -webkit-box-flex: 0;
     -webkit-flex: 0 0 100%;

@@ -69,6 +69,8 @@ $wrapper_classes   = apply_filters( 'woocommerce_single_product_image_gallery_cl
 		<!-- </figure> -->
 	</div>
 	<div class="main-photo">
-		<img src="<?= get_the_post_thumbnail_url( $post->ID); ?>" alt="<? the_title(); ?>" title="<? the_title(); ?>" />
+		<a href="<?= get_the_post_thumbnail_url($post->ID); ?>" class="fancybox">
+			<img src="<?= get_the_post_thumbnail_url( $post->ID, 'full'); ?>" alt="<? the_title(); ?>" title="<? the_title(); ?>" />
+		</a>
 	</div>
 </div>
